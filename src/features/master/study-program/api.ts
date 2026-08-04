@@ -1,9 +1,8 @@
 import api from "@/lib/axios";
-
 import { mapStudyPrograms } from "./mapper";
 import type { StudyProgram, StudyProgramApiResponse } from "./types";
 
-export interface GetStudyProgramsOptions {
+interface GetStudyProgramsOptions {
   includeFaculty?: boolean;
 }
 
@@ -15,11 +14,11 @@ export async function getStudyPrograms(
   const { data } = await api.get<StudyProgramApiResponse>(
     "/master/studi-program",
     {
-      params: {
-        ...(includeFaculty && {
-          include: "faculty",
-        }),
-      },
+      params: includeFaculty
+        ? {
+            include: "faculty",
+          }
+        : undefined,
     },
   );
 
