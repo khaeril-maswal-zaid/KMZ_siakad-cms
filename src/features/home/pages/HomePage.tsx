@@ -1,29 +1,38 @@
+"use client";
+
+import { useHome } from "../hooks";
+
 import {
-  AdmissionFlowSection,
-  CallToAction,
-  FaqSection,
-  Footer,
   Header,
   Hero,
+  Footer,
+  LandingSkeleton,
   ProgramSection,
-} from "@/features/home/components";
+  FaqSection,
+  CallToAction,
+  AdmissionFlowSection,
+} from "../components";
 
 export function HomePage() {
+  const { data, isLoading } = useHome();
+
+  if (isLoading || !data) {
+    return <LandingSkeleton />;
+  }
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white text-slate-950">
-      <Header />
+    <>
+      <Header campus={data.campus} />
+
       <main>
-        <Hero />
-
-        <ProgramSection />
-
-        <AdmissionFlowSection />
-
-        <FaqSection />
-
+        <Hero data={data} />
+        {/* <ProgramSection programs={data} />
+        <AdmissionFlowSection steps={data.steps} />
+        <FaqSection faq={data.faq} /> */}
         <CallToAction />
       </main>
-      <Footer />/
-    </div>
+
+      <Footer campus={data.campus} />
+    </>
   );
 }

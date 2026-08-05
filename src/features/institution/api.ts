@@ -8,7 +8,7 @@ import type {
 
 export async function getInstitutionSettings(): Promise<InstitutionSettings> {
   const { data } =
-    await api.get<InstitutionSettingApiResponse>("/master/settings");
+    await api.get<InstitutionSettingApiResponse>("/master/institusi");
 
   return mapInstitutionSettings(data.data);
 }
