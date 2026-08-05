@@ -60,4 +60,10 @@ export interface StudyProgram {
   accreditation: string;
 
   faculty?: Faculty;
+
+  /**
+   * hanya kebutuhan UI
+   * bukan dari database
+   */
+  accent: "blue" | "cyan" | "indigo" | "sky";
 }

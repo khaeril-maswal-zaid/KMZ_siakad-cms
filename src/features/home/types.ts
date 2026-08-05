@@ -1,3 +1,5 @@
+import { StudyProgram } from "@/features/master/study-program";
+
 /**
  * Campus information displayed on landing page
  */
@@ -26,25 +28,6 @@ export interface AdmissionWave {
   academicYear: string;
   period: string;
   status: "active" | "upcoming" | "closed";
-}
-
-/**
- * Program Studi
- * Mapping dari master_study_programs
- */
-export interface StudyProgram {
-  id: string;
-  name: string;
-  code: string;
-  level: string;
-  faculty: string;
-  description?: string;
-
-  /**
-   * hanya kebutuhan UI
-   * bukan dari database
-   */
-  accent: "blue" | "cyan" | "indigo" | "sky";
 }
 
 /**

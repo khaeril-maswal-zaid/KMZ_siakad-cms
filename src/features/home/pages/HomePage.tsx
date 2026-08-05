@@ -29,7 +29,7 @@ export function HomePage() {
       <main>
         <Hero data={data} />
         <ProgramSection programs={data.programs} />
-        {/* <AdmissionFlowSection steps={data.steps} /> */}
+        <AdmissionFlowSection steps={data.admissionSteps} />
         {/* <FaqSection faq={data.faq} /> */}
         <CallToAction />
       </main>

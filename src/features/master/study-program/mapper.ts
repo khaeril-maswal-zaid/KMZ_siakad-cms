@@ -5,6 +5,20 @@ import type {
   StudyProgramApiResource,
 } from "./types";
 
+const ACCENTS = ["blue", "cyan", "indigo", "sky"] as const;
+
+function getAccentFromString(value: string): (typeof ACCENTS)[number] {
+  let hash = 0;
+
+  for (let i = 0; i < value.length; i++) {
+    hash = value.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  const index = Math.abs(hash) % ACCENTS.length;
+
+  return ACCENTS[index];
+}
+
 function mapFaculty(faculty: FacultyApiResource): Faculty {
   return {
     id: faculty.id,
@@ -20,6 +34,7 @@ export function mapStudyProgram(
   const facultyRelation = resource.relationships?.faculty?.data;
 
   const faculty = faculties.find((item) => item.id === facultyRelation?.id);
+  const facultyName = faculty?.attributes.name ?? "default";
 
   return {
     id: resource.id,
@@ -27,6 +42,7 @@ export function mapStudyProgram(
     code: resource.attributes.code,
     level: resource.attributes.level,
     accreditation: resource.attributes.accreditation,
+    accent: getAccentFromString(facultyName),
 
     faculty: faculty ? mapFaculty(faculty) : undefined,
   };

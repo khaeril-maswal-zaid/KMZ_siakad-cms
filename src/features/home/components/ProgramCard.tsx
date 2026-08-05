@@ -1,7 +1,7 @@
 import { BookOpen, MoveUpRight } from "lucide-react";
 import Link from "next/link";
 
-import type { StudyProgram } from "@/features/home/types";
+import type { StudyProgram } from "@/features/master/study-program";
 
 type ProgramCardProps = {
   program: StudyProgram;
@@ -73,7 +73,7 @@ export function ProgramCard({ program, index }: ProgramCardProps) {
 
       <div className="relative mt-8 flex-1">
         <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-blue-600">
-          {program.faculty}
+          {program.faculty?.name}
         </p>
 
         <h3 className="mt-3 text-[23px] font-bold tracking-[-0.035em] text-slate-950">
@@ -81,7 +81,7 @@ export function ProgramCard({ program, index }: ProgramCardProps) {
         </h3>
 
         <p className="mt-3 text-sm leading-6 text-slate-500">
-          {program.description}
+          {program.name} dengan akreditas {program.accreditation}.
         </p>
       </div>
 

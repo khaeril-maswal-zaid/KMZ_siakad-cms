@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { useInstitution } from "@/features/institution";
-import { mapCampus } from "./mapper";
-import { useStudyPrograms } from "../master/study-program";
+import { useStudyPrograms } from "@/features/master/study-program";
+import { admissionSteps, mapCampus } from "./mapper";
 
 export function useHome() {
   const institution = useInstitution();
-  // const programs = useStudyPrograms();
+  const studyPrograms = useStudyPrograms({ includeFaculty: true });
 
   const data = useMemo(() => {
     if (!institution.data) {
@@ -21,15 +21,15 @@ export function useHome() {
         status: "active" as const,
         academicYear: "2026/2027",
       },
-      programs: [],
-      admissionSteps: [],
+      programs: studyPrograms.data ?? [],
+      admissionSteps: admissionSteps(),
       faqs: [],
     };
-  }, [institution.data]);
+  }, [institution.data, studyPrograms.data]);
 
   return {
     data,
-    isLoading: institution.isLoading,
-    error: institution.error,
+    isLoading: institution.isLoading || studyPrograms.isLoading,
+    error: institution.error ?? studyPrograms.error,
   };
 }

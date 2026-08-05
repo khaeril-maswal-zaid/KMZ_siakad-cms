@@ -57,7 +57,7 @@ export function AdmissionFlowSection({ steps }: AdmissionFlowSectionProps) {
 
               return (
                 <article
-                  key={item.id}
+                  key={`${item.id}-${item.order}`}
                   className="group rounded-[24px] border border-white/10 bg-white/[0.055] p-6 transition-colors hover:bg-white/[0.09]"
                 >
                   <div className="flex items-center justify-between">
