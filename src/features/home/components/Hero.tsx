@@ -1,9 +1,7 @@
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 
 import Link from "next/link";
-
 import { AdmissionStatusCard } from "./AdmissionStatusCard";
-
 import type { PmbLandingData } from "@/features/home/types";
 
 type HeroProps = {
@@ -14,9 +12,7 @@ export function Hero({ data }: HeroProps) {
   return (
     <section className="hero-grid relative overflow-hidden bg-[#f4f8ff] pb-24 pt-32 sm:pb-28 sm:pt-36 lg:min-h-[800px] lg:pb-28 lg:pt-40">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[560px] w-[920px] -translate-x-1/2 rounded-full bg-blue-300/20 blur-[120px]" />
-
       <div className="pointer-events-none absolute -right-48 top-32 size-[560px] rounded-full border border-blue-200/60" />
-
       <div className="pointer-events-none absolute -right-32 top-48 size-[440px] rounded-full border border-blue-200/60" />
 
       <div className="relative mx-auto grid max-w-[1240px] items-center gap-16 px-5 sm:px-8 lg:grid-cols-[1.03fr_0.97fr] lg:gap-12 lg:px-10">

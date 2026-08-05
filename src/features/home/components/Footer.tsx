@@ -1,9 +1,6 @@
 import { Mail, MapPin, MessageCircleMore, Phone } from "lucide-react";
-
 import Link from "next/link";
-
 import { CampusLogo } from "@/features/home/components/CampusLogo";
-
 import type { PmbLandingData } from "@/features/home/types";
 
 interface FooterProps {
@@ -56,7 +53,7 @@ export function Footer({ campus }: FooterProps) {
               >
                 <MessageCircleMore className="size-4 text-blue-600" />
 
-                {campus.contact.whatsappLabel}
+                {campus.contact.whatsapp}
               </a>
 
               <a

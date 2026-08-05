@@ -1,9 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-
 import { ProgramCard } from "./ProgramCard";
-
 import type { StudyProgram } from "@/features/home/types";
 
 type ProgramSectionProps = {

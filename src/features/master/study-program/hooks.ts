@@ -12,7 +12,6 @@ export function useStudyPrograms(options: UseStudyProgramsOptions = {}) {
 
   return useQuery({
     queryKey: studyProgramQueryKeys.lists(includeFaculty),
-
     queryFn: () => getStudyPrograms({ includeFaculty }),
   });
 }
