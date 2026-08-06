@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { CampusLogo } from "@/components/CampusLogo";
-import { PmbSiteFooter } from "@/components/PmbSiteFooter";
 import { RegistrationProgress } from "@/components/RegistrationProgress";
 import { CampusProfile } from "@/types/campus-profile";
+import { PmbSiteFooter } from "./PmbSiteFooter";
 
 type PmbFlowShellProps = {
   currentStep: 1 | 2 | 3 | 4 | 5;
@@ -20,32 +20,13 @@ type PmbFlowShellProps = {
   campus?: CampusProfile;
 };
 
-const defaultCampus: CampusProfile = {
-  institutionType: "Universitas",
-  name: "Universitas Arunika",
-  description: "Penerimaan mahasiswa baru secara digital.",
-  logo: undefined,
-  contact: {
-    email: "pmb@arunika.ac.id",
-    phone: "+62 21 1234 5678",
-    whatsapp: "6281234567890",
-    whatsappUrl: "https://wa.me/6281234567890",
-    address: "Jalan Pendidikan No. 1, Kota Contoh",
-    helpHours: "Senin - Jumat 08.00 - 16.00",
-  },
-};
-
 export function PmbFlowShell({
   currentStep,
   eyebrow,
   title,
   description,
   children,
-  authenticatedArea = false,
-  campus = defaultCampus,
 }: PmbFlowShellProps) {
-  const router = useRouter();
-
   const helpUrl = "Halo Admin PMB, saya butuh bantuan terkait pendaftaran.";
 
   async function handleLogout() {
@@ -63,7 +44,7 @@ export function PmbFlowShell({
             aria-label="Kembali ke Landing Page PMB"
             className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4"
           >
-            <CampusLogo campus={campus} />
+            <CampusLogo />
           </Link>
           {isAuthenticated ? (
             <div className="flex items-center gap-2">
@@ -113,7 +94,7 @@ export function PmbFlowShell({
         {children}
       </main>
 
-      <PmbSiteFooter campus={campus} />
+      <PmbSiteFooter />
 
       <a
         href={helpUrl}

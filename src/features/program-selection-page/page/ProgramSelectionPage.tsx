@@ -13,11 +13,14 @@ import {
   JalurMasuk,
   SistemKuliah,
 } from "@/features/program-selection-page/components/";
+import { PmbFlowShell } from "@/components/PmbFowShell";
 
 export function ProgramSelectionPage({
   initialProgramId,
+  nextStep,
 }: {
   initialProgramId?: string;
+  nextStep?: () => void;
 }) {
   const router = useRouter();
 
@@ -110,47 +113,54 @@ export function ProgramSelectionPage({
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f8fd]">
-      <section className="mx-auto grid max-w-295 gap-8 px-5 py-10 lg:grid-cols-[1fr_340px]">
-        <div className="space-y-5">
-          <PilihanProdi
-            programs={data.programs}
-            selectedProgramId={selectedProgramId}
-            onProgramChange={setSelectedProgramId}
-          />
+    <>
+      <PmbFlowShell
+        currentStep={1}
+        eyebrow="Tahap 1 dari 5"
+        title="Pilih program dan jalur kuliahmu."
+        description="Mulai dari program studi, lalu tentukan sistem kuliah dan jalur masuk yang paling sesuai sebelum membuat akun pendaftaran."
+      >
+        <section className="mx-auto grid max-w-295 gap-8 px-5 py-10 lg:grid-cols-[1fr_340px]">
+          <div className="space-y-5">
+            <PilihanProdi
+              programs={data.programs}
+              selectedProgramId={selectedProgramId}
+              onProgramChange={setSelectedProgramId}
+            />
 
-          <SistemKuliah
-            campuses={campuses}
-            availableStudySystems={availableStudySystems}
-            selectedCampus={selectedCampus}
-            selectedSession={selectedSession}
-            onCampusChange={(campus) => {
-              setSelectedCampus(campus);
-              setSelectedSession("");
-            }}
-            onSessionChange={setSelectedSession}
-          />
+            <SistemKuliah
+              campuses={campuses}
+              availableStudySystems={availableStudySystems}
+              selectedCampus={selectedCampus}
+              selectedSession={selectedSession}
+              onCampusChange={(campus) => {
+                setSelectedCampus(campus);
+                setSelectedSession("");
+              }}
+              onSessionChange={setSelectedSession}
+            />
 
-          <JalurMasuk
-            admissionPaths={data.admissionPaths}
-            selectedAdmissionPathId={selectedAdmissionPathId}
-            onAdmissionPathChange={setSelectedAdmissionPathId}
-          />
+            <JalurMasuk
+              admissionPaths={data.admissionPaths}
+              selectedAdmissionPathId={selectedAdmissionPathId}
+              onAdmissionPathChange={setSelectedAdmissionPathId}
+            />
 
-          <Information />
-        </div>
+            <Information />
+          </div>
 
-        <div className="lg:sticky lg:top-6">
-          <SelectionSummaryCard
-            selection={selectedStudy}
-            waveName={data.waveName}
-            registrationFee={data.registrationFee}
-            actionLabel="Lanjutkan Registrasi"
-            onAction={continueRegistration}
-            disabled={!canContinue}
-          />
-        </div>
-      </section>
-    </div>
+          <div className="lg:sticky lg:top-6">
+            <SelectionSummaryCard
+              selection={selectedStudy}
+              waveName={data.waveName}
+              registrationFee={data.registrationFee}
+              actionLabel="Lanjutkan Registrasi"
+              onAction={continueRegistration}
+              disabled={!canContinue}
+            />
+          </div>
+        </section>
+      </PmbFlowShell>
+    </>
   );
 }

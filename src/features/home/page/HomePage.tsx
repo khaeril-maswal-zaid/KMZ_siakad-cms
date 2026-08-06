@@ -5,7 +5,7 @@ import { useHome } from "../hooks";
 import {
   Header,
   Hero,
-  Footer,
+  PmbSiteFooter,
   LandingSkeleton,
   ProgramSection,
   CallToAction,
@@ -31,7 +31,7 @@ export function HomePage() {
         <CallToAction />
       </main>
 
-      <Footer />
+      <PmbSiteFooter />
     </div>
   );
 }

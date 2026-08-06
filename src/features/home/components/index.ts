@@ -6,6 +6,6 @@ export * from "./ProgramSection";
 export * from "./AdmissionFlowSection";
 export * from "./FaqSection";
 export * from "./CallToAction";
-export * from "../../../components/Footer";
+export * from "../../../components/PmbSiteFooter";
 export * from "./CampusLogo";
 export * from "./LandingSkeleton";
