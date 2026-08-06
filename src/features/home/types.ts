@@ -1,23 +1,5 @@
 import { StudyProgram } from "@/features/master/study-program";
-
-/**
- * Campus information displayed on landing page
- */
-export interface CampusProfile {
-  name: string;
-  institutionType: string;
-  description?: string;
-  logo?: string;
-
-  contact: {
-    email: string;
-    phone: string;
-    whatsapp: string;
-    address: string;
-    whatsappUrl: string;
-    helpHours: string;
-  };
-}
+import { CampusProfile } from "@/types/campus-profile";
 
 /**
  * Admission period / gelombang PMB
@@ -57,7 +39,6 @@ export interface FaqItem {
 export interface PmbLandingData {
   academicYear: string;
   // registrationFee: number;
-  campus: CampusProfile;
   activeWave: AdmissionWave;
   programs: StudyProgram[];
   admissionSteps: AdmissionStep[];

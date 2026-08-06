@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useInstitution } from "@/features/institution";
 import { useStudyPrograms } from "@/features/master/study-program";
-import { admissionSteps, mapCampus } from "./mapper";
+import { admissionSteps } from "./mapper";
 
 export function useHome() {
   const institution = useInstitution();
@@ -13,7 +13,6 @@ export function useHome() {
     }
 
     return {
-      campus: mapCampus(institution.data),
       academicYear: "2026/2027",
       activeWave: {
         name: "Gelombang 1",

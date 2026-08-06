@@ -8,7 +8,6 @@ import {
   Footer,
   LandingSkeleton,
   ProgramSection,
-  FaqSection,
   CallToAction,
   AdmissionFlowSection,
 } from "@/features/home/components";
@@ -22,7 +21,7 @@ export function HomePage() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-slate-950">
-      <Header campus={data.campus} />
+      <Header />
 
       <main>
         <Hero data={data} />
@@ -32,7 +31,7 @@ export function HomePage() {
         <CallToAction />
       </main>
 
-      <Footer campus={data.campus} />
+      <Footer />
     </div>
   );
 }

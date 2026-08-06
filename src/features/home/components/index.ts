@@ -1,4 +1,4 @@
-export * from "./Header";
+export * from "../../../components/Header";
 export * from "./Hero";
 export * from "./AdmissionStatusCard";
 export * from "./ProgramCard";
@@ -6,6 +6,6 @@ export * from "./ProgramSection";
 export * from "./AdmissionFlowSection";
 export * from "./FaqSection";
 export * from "./CallToAction";
-export * from "./Footer";
+export * from "../../../components/Footer";
 export * from "./CampusLogo";
 export * from "./LandingSkeleton";

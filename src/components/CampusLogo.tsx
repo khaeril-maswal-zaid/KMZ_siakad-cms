@@ -1,3 +1,4 @@
+import { CampusProfile } from "@/types/campus-profile";
 import { GraduationCap } from "lucide-react";
 
 type CampusLogoProps = {

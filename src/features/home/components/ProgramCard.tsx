@@ -1,6 +1,5 @@
 import { BookOpen, MoveUpRight } from "lucide-react";
 import Link from "next/link";
-
 import type { StudyProgram } from "@/features/master/study-program";
 
 type ProgramCardProps = {

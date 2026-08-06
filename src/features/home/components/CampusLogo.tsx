@@ -1,14 +1,10 @@
+import { useFooterData } from "@/hooks/institution";
 import { GraduationCap } from "lucide-react";
 
-import type { CampusProfile } from "@/features/home/types";
+export function CampusLogo() {
+  const { campus } = useFooterData();
+  if (!campus) return null;
 
-type CampusLogoProps = {
-  campus: Pick<CampusProfile, "institutionType" | "name">;
-
-  compact?: boolean;
-};
-
-export function CampusLogo({ campus, compact = false }: CampusLogoProps) {
   return (
     <div
       className="flex items-center gap-3"
@@ -38,10 +34,9 @@ export function CampusLogo({ campus, compact = false }: CampusLogoProps) {
         <GraduationCap className="relative size-5" strokeWidth={2.2} />
       </span>
 
-      {!compact && (
-        <span className="leading-none">
-          <span
-            className="
+      <span className="leading-none">
+        <span
+          className="
               block 
               text-[10px] 
               font-bold 
@@ -49,12 +44,12 @@ export function CampusLogo({ campus, compact = false }: CampusLogoProps) {
               tracking-[0.22em] 
               text-[#1267e8]
             "
-          >
-            {campus.institutionType}
-          </span>
+        >
+          {campus.institutionType}
+        </span>
 
-          <span
-            className="
+        <span
+          className="
               mt-1 
               block 
               text-[17px] 
@@ -62,11 +57,10 @@ export function CampusLogo({ campus, compact = false }: CampusLogoProps) {
               tracking-[-0.03em] 
               text-slate-950
             "
-          >
-            {campus.name}
-          </span>
+        >
+          {campus.name}
         </span>
-      )}
+      </span>
     </div>
   );
 }

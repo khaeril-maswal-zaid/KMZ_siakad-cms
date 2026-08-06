@@ -2,7 +2,8 @@
 
 import { Mail, MapPin, MessageCircleMore, Phone } from "lucide-react";
 import Link from "next/link";
-import { CampusLogo } from "@/components/campus-logo";
+import { CampusLogo } from "@/components/CampusLogo";
+import { CampusProfile } from "@/types/campus-profile";
 
 export function PmbSiteFooter({ campus }: { campus: CampusProfile }) {
   return (
@@ -37,7 +38,7 @@ export function PmbSiteFooter({ campus }: { campus: CampusProfile }) {
                 className="flex items-center gap-3 hover:text-blue-700"
               >
                 <MessageCircleMore className="size-4 text-blue-600" />
-                {campus.contact.whatsappLabel}
+                {campus.contact.whatsapp}
               </a>
               <a
                 href={`mailto:${campus.contact.email}`}
