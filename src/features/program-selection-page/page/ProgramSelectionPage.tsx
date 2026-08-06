@@ -2,15 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { SelectionSummaryCard } from "@/features/program-selection-page/components/SelectionSummaryCard";
+import { SelectionSummaryCard } from "@/components/SelectionSummaryCard";
 import type { StudySelection } from "@/features/program-selection-page/types";
 import { useProgramSelectionData } from "@/features/program-selection-page/hooks";
-import { SistemKuliah } from "../components/SistemKuliah";
-import { JalurMasuk } from "../components/JalurMasuk";
-import { PilihanProdi } from "../components/PilihanProdi";
 import { LoadingComponent } from "@/components/LoadingComponent";
 import { ErrorComponent } from "@/components/ErrorComponent";
-import { Information } from "../components/Information";
+import {
+  Information,
+  PilihanProdi,
+  JalurMasuk,
+  SistemKuliah,
+} from "@/features/program-selection-page/components/";
 
 export function ProgramSelectionPage({
   initialProgramId,
@@ -109,7 +111,7 @@ export function ProgramSelectionPage({
 
   return (
     <div className="min-h-screen bg-[#f5f8fd]">
-      <section className="mx-auto grid max-w-[1180px] gap-8 px-5 py-10 lg:grid-cols-[1fr_340px]">
+      <section className="mx-auto grid max-w-295 gap-8 px-5 py-10 lg:grid-cols-[1fr_340px]">
         <div className="space-y-5">
           <PilihanProdi
             programs={data.programs}

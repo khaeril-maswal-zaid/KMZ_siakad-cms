@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-import { SelectionSummaryCard } from "@/features/program-selection-page/components/SelectionSummaryCard";
+import { SelectionSummaryCard } from "@/components/SelectionSummaryCard";
 import type { StudySelection } from "@/features/program-selection-page/types";
 import { useProgramSelectionData } from "@/features/program-selection-page/hooks";
 import type { AdmissionPath } from "@/features/master/admission-path";
