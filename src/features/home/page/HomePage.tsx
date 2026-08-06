@@ -20,8 +20,6 @@ export function HomePage() {
     return <LandingSkeleton />;
   }
 
-  console.log(data);
-
   return (
     <div className="min-h-screen overflow-x-hidden bg-white text-slate-950">
       <Header campus={data.campus} />
