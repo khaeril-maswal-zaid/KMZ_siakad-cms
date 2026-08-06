@@ -10,7 +10,11 @@ import { RegistrationSummary } from "../components/RegistrationSummary";
 import { useRegistrationData } from "../hooks";
 import type { RegistrationFormValues } from "../types";
 
-export default function RegistrationPage() {
+export default function RegistrationPage({
+  prevStep,
+}: {
+  prevStep: () => void;
+}) {
   const { selection, waveName, registrationFee, isLoading, error, refetch } =
     useRegistrationData();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,6 +53,7 @@ export default function RegistrationPage() {
           onSubmit={() => {
             toast.info("Aksi ringkasan belum terhubung ke backend.");
           }}
+          prevStep={prevStep}
           disabled={!selection}
           isLoading={isSubmitting}
         />

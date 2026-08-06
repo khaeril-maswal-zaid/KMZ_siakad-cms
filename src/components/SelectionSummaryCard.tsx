@@ -129,6 +129,7 @@ export function SelectionSummaryCard({
             </>
           )}
         </button>
+
         {disabled && (
           <p className="px-2 pb-1 pt-3 text-center text-[11px] leading-4 text-slate-400">
             Lengkapi pilihan program, sistem kuliah, dan jalur masuk untuk

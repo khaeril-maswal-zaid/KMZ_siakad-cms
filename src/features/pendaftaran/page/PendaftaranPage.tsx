@@ -11,9 +11,6 @@ export function PendaftaranPage({
 }) {
   const [step, setStep] = useState(1);
 
-  const nextStep = () => setStep(2);
-  const previousStep = () => setStep(1);
-
   return (
     <>
       {step === 1 && (
@@ -22,7 +19,7 @@ export function PendaftaranPage({
           nextStep={() => setStep(2)}
         />
       )}
-      {step === 2 && <RegistrationPage />}
+      {step === 2 && <RegistrationPage prevStep={() => setStep(1)} />}
     </>
   );
 }

@@ -20,7 +20,7 @@ export function ProgramSelectionPage({
   nextStep,
 }: {
   initialProgramId?: string;
-  nextStep?: () => void;
+  nextStep: () => void;
 }) {
   const router = useRouter();
 
@@ -155,7 +155,7 @@ export function ProgramSelectionPage({
               waveName={data.waveName}
               registrationFee={data.registrationFee}
               actionLabel="Lanjutkan Registrasi"
-              onAction={continueRegistration}
+              onAction={nextStep}
               disabled={!canContinue}
             />
           </div>
