@@ -10,7 +10,7 @@ import { JalurMasuk } from "../components/JalurMasuk";
 import { PilihanProdi } from "../components/PilihanProdi";
 import { LoadingComponent } from "@/components/LoadingComponent";
 import { ErrorComponent } from "@/components/ErrorComponent";
-import { Information } from "./Information";
+import { Information } from "../components/Information";
 
 export function ProgramSelectionPage({
   initialProgramId,
@@ -24,9 +24,9 @@ export function ProgramSelectionPage({
     initialProgramId ?? "",
   );
 
-  const [selectedCampus, setSelectedCampus] = useState("");
-  const [selectedSession, setSelectedSession] = useState("");
-  const [selectedAdmissionPathId, setSelectedAdmissionPathId] = useState("");
+  const [selectedCampus, setSelectedCampus] = useState(""); //kampus
+  const [selectedSession, setSelectedSession] = useState(""); //waktu kuliah
+  const [selectedAdmissionPathId, setSelectedAdmissionPathId] = useState(""); //jalur masuk
 
   const campuses = useMemo(() => {
     if (!data) return [];
@@ -87,22 +87,11 @@ export function ProgramSelectionPage({
 
   useEffect(() => {
     if (!data) return;
-
-    if (!selectedCampus && campuses.length) {
-      setSelectedCampus(campuses[0]);
-    }
   }, [campuses, data, selectedCampus]);
 
   useEffect(() => {
     if (!selectedCampus) return;
-
     if (selectedSession) return;
-
-    const firstSystem = availableStudySystems[0];
-
-    if (firstSystem) {
-      setSelectedSession(firstSystem.session);
-    }
   }, [availableStudySystems, selectedCampus, selectedSession]);
 
   function continueRegistration() {
