@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { CampusLogo } from "@/features/home/components/CampusLogo";
+// import { CampusLogo } from "@/features/home/components/CampusLogo";
+import { CampusLogo } from "@/components/CampusLogo";
 
 export function Header() {
   return (

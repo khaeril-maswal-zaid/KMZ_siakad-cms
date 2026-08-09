@@ -1,7 +1,7 @@
 import { useFooterData } from "@/hooks/institution";
 import { GraduationCap } from "lucide-react";
 
-export function CampusLogo() {
+export function CampusLogox() {
   const { campus } = useFooterData();
   if (!campus) return null;
 

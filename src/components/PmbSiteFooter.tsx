@@ -1,6 +1,7 @@
 import { Mail, MapPin, MessageCircleMore, Phone } from "lucide-react";
 import Link from "next/link";
-import { CampusLogo } from "@/features/home/components/CampusLogo";
+// import { CampusLogo } from "@/features/home/components/CampusLogo";
+import { CampusLogo } from "@/components/CampusLogo";
 import { useFooterData } from "@/hooks/institution";
 
 export function PmbSiteFooter() {

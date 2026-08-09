@@ -61,25 +61,15 @@ export function ProgramSelectionPage({
     ? {
         level: selectedProgram.level,
         faculty: selectedProgram.faculty?.name ?? "-",
-
         programId: selectedProgram.id,
-
         programName: selectedProgram.name,
-
         studySystemId: selectedStudySystem?.id ?? "",
-
         studySystem: selectedStudySystem?.name ?? "",
-
         admissionPathId: selectedAdmissionPath?.id ?? "",
-
         admissionPathName: selectedAdmissionPath?.name ?? "",
-
         admissionPathDescription: selectedAdmissionPath?.description ?? "",
-
         waveId: "wave-1",
-
         waveName: data?.waveName ?? "",
-
         registrationFee: data?.registrationFee ?? 0,
       }
     : null;
@@ -99,7 +89,7 @@ export function ProgramSelectionPage({
     if (selectedSession) return;
   }, [availableStudySystems, selectedCampus, selectedSession]);
 
-  function continueRegistration() {
+  function continueRegistrationX() {
     if (!canContinue) return;
     router.push("/pendaftaran/registrasi");
   }
