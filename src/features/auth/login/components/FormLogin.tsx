@@ -1,29 +1,55 @@
-import {
-  ArrowRight,
-  AtSign,
-  Eye,
-  EyeOff,
-  LockKeyhole,
-  ShieldCheck,
-} from "lucide-react";
+import { ArrowRight, AtSign, Eye, EyeOff, LockKeyhole } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+
+import { loginFormSchema } from "../schema";
+import { useLogin } from "../hooks";
 
 const inputClassName =
   "min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100";
 
 export function FormLogin() {
+  const router = useRouter();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const loginMutation = useLogin();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-  }
 
-  const login = {
-    isPending: false,
-  };
+    const parsed = loginFormSchema.safeParse({
+      email: identifier.trim(),
+      password,
+    });
+
+    if (!parsed.success) {
+      const firstMessage = parsed.error.flatten().fieldErrors;
+      const message =
+        firstMessage.email?.[0] ??
+        firstMessage.password?.[0] ??
+        "Data login tidak valid";
+
+      toast.error(message);
+      return;
+    }
+
+    try {
+      await loginMutation.mutateAsync(parsed.data);
+
+      toast.success("Login berhasil");
+      router.push("/");
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Login gagal. Periksa email dan password Anda.";
+
+      toast.error(message);
+    }
+  }
 
   return (
     <form
@@ -90,11 +116,11 @@ export function FormLogin() {
 
       <button
         type="submit"
-        disabled={login.isPending}
+        disabled={loginMutation.isPending}
         className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5 hover:bg-blue-700 disabled:cursor-wait disabled:bg-blue-400 disabled:hover:translate-y-0"
       >
-        {login.isPending ? "Memproses login..." : "Masuk ke Dashboard"}
-        {!login.isPending && <ArrowRight className="size-4" />}
+        {loginMutation.isPending ? "Memproses login..." : "Masuk ke Dashboard"}
+        {!loginMutation.isPending && <ArrowRight className="size-4" />}
       </button>
 
       <p className="mt-5 text-center text-xs leading-5 text-slate-500">
