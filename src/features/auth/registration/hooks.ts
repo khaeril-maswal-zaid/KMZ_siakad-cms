@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { useProgramSelectionData } from "@/features/program-selection-page/hooks";
+import { useProgramSelectionData } from "@/features/program-selection/hooks";
 import type {
   ProgramSelectionPageData,
   StudySelection,
-} from "@/features/program-selection-page/types";
+} from "@/features/program-selection/types";
 import { getStoredRegistrationSelection } from "./api";
 import {
   createDefaultRegistrationSelection,

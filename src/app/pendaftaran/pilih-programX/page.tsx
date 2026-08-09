@@ -1,4 +1,4 @@
-import { ProgramSelectionPage } from "@/features/program-selection-page/page/ProgramSelectionPage";
+import { ProgramSelectionPage } from "@/features/program-selection/page/ProgramSelectionPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

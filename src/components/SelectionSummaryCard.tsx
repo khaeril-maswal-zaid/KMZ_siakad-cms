@@ -7,7 +7,7 @@ import {
   ReceiptText,
   Route,
 } from "lucide-react";
-import { StudySelection } from "../features/program-selection-page/types";
+import { StudySelection } from "../features/program-selection/types";
 
 const currencyFormatter = new Intl.NumberFormat("id-ID", {
   style: "currency",

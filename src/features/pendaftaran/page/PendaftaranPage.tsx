@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgramSelectionPage } from "@/features/program-selection-page/page/ProgramSelectionPage";
+import { ProgramSelectionPage } from "@/features/program-selection/page/ProgramSelectionPage";
 import RegistrationPage from "@/features/auth/registration/page/RegistrationPage";
 import { useState } from "react";
 

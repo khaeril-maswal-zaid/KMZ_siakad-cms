@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { SelectionSummaryCard } from "@/components/SelectionSummaryCard";
-import type { StudySelection } from "@/features/program-selection-page/types";
-import { useProgramSelectionData } from "@/features/program-selection-page/hooks";
+import type { StudySelection } from "@/features/program-selection/types";
+import { useProgramSelectionData } from "@/features/program-selection/hooks";
 import { LoadingComponent } from "@/components/LoadingComponent";
 import { ErrorComponent } from "@/components/ErrorComponent";
 import {
@@ -12,7 +12,7 @@ import {
   PilihanProdi,
   JalurMasuk,
   SistemKuliah,
-} from "@/features/program-selection-page/components/";
+} from "@/features/program-selection/components";
 import { PmbFlowShell } from "@/components/PmbFowShell";
 
 export function ProgramSelectionPage({

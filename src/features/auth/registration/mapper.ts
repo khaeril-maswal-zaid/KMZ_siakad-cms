@@ -1,7 +1,7 @@
 import type {
   ProgramSelectionPageData,
   StudySelection,
-} from "@/features/program-selection-page/types";
+} from "@/features/program-selection/types";
 
 export function mapStoredSelectionToStudySelection(
   selection: StudySelection | null,

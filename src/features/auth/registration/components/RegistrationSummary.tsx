@@ -1,7 +1,7 @@
 "use client";
 
 import { SelectionSummaryCard } from "@/components/SelectionSummaryCard";
-import type { StudySelection } from "@/features/program-selection-page/types";
+import type { StudySelection } from "@/features/program-selection/types";
 
 export function RegistrationSummary({
   selection,

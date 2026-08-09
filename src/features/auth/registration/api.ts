@@ -1,4 +1,4 @@
-import type { StudySelection } from "@/features/program-selection-page/types";
+import type { StudySelection } from "@/features/program-selection/types";
 
 export const REGISTRATION_SELECTION_KEY = "pmb_registration_selection";
 

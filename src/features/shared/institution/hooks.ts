@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { getInstitutionSettings } from "./api";
 import { institutionQueryKeys } from "./query-keys";
 
