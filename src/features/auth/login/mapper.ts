@@ -3,11 +3,7 @@ import type { AuthSession, LoginApiResponse } from "./types";
 export function mapLoginApiResponse(response: LoginApiResponse): AuthSession {
   const payload = response?.data ?? response;
 
-  const token =
-    payload?.token ??
-    payload?.access_token ??
-    payload?.bearer_token ??
-    (typeof payload?.token === "string" ? payload.token : undefined);
+  const token = payload?.token;
 
   if (!token) {
     throw new Error("Login response tidak mengembalikan token");
@@ -15,8 +11,7 @@ export function mapLoginApiResponse(response: LoginApiResponse): AuthSession {
 
   return {
     token,
-    tokenType: payload?.type ?? "Bearer",
-    user: payload?.user ?? payload?.data?.user,
-    message: response?.message,
+    user: payload?.user ?? response?.user,
+    message: payload?.message ?? response?.message,
   };
 }

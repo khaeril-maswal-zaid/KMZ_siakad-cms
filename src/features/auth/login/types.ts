@@ -13,16 +13,11 @@ export interface LoginApiUser {
 
 export interface LoginApiResponse {
   token?: string;
-  access_token?: string;
-  bearer_token?: string;
-  type?: string;
   message?: string;
   user?: LoginApiUser;
   data?: {
     token?: string;
-    access_token?: string;
-    bearer_token?: string;
-    type?: string;
+    message?: string;
     user?: LoginApiUser;
     [key: string]: unknown;
   };
@@ -31,8 +26,6 @@ export interface LoginApiResponse {
 
 export interface AuthSession {
   token: string;
-  tokenType?: string;
-  expiresIn?: number;
   user?: LoginApiUser;
   message?: string;
 }
