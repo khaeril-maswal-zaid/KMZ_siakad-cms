@@ -7,6 +7,7 @@ import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { CampusLogo } from "@/components/CampusLogo";
 import { RegistrationProgress } from "@/components/RegistrationProgress";
+import { useAuth } from "@/providers/auth-provider";
 import { CampusProfile } from "@/types/campus-profile";
 import { PmbSiteFooter } from "./PmbSiteFooter";
 
@@ -27,13 +28,15 @@ export function PmbFlowShell({
   description,
   children,
 }: PmbFlowShellProps) {
+  const router = useRouter();
+  const { isAuthenticated, logout } = useAuth();
   const helpUrl = "Halo Admin PMB, saya butuh bantuan terkait pendaftaran.";
 
   async function handleLogout() {
-    toast.info("Fitur logout belum diimplementasikan.");
+    logout();
+    toast.success("Logout berhasil");
+    router.push("/");
   }
-
-  const isAuthenticated = false;
 
   return (
     <div className="min-h-screen bg-[#f5f8fd] text-slate-950">
