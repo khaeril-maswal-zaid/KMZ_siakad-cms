@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useInstitution } from "@/features/institution";
+import { useInstitution } from "@/features/shared/institution";
 import { mapCampusProfile } from "@/mapper/institution";
 
 export function useFooterData() {

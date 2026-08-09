@@ -1,4 +1,4 @@
-import { StudyProgram } from "@/features/master/study-program";
+import { StudyProgram } from "@/features/shared/master/study-program";
 import { CampusProfile } from "@/types/campus-profile";
 
 /**

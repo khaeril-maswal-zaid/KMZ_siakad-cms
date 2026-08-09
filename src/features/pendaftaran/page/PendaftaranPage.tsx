@@ -1,7 +1,7 @@
 "use client";
 
 import { ProgramSelectionPage } from "@/features/program-selection-page/page/ProgramSelectionPage";
-import RegistrationPage from "@/features/registration/page/RegistrationPage";
+import RegistrationPage from "@/features/auth/registration/page/RegistrationPage";
 import { useState } from "react";
 
 export function PendaftaranPage({

@@ -1,5 +1,5 @@
 import { Check, Route } from "lucide-react";
-import type { AdmissionPath } from "@/features/master/admission-path/types";
+import type { AdmissionPath } from "@/features/shared/master/admission-path/types";
 import { ChoiceSection } from "./ChoiceSection";
 
 type JalurMasukProps = {

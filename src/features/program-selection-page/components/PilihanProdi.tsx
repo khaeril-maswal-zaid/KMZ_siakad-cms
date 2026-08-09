@@ -1,6 +1,6 @@
 import { Check, GraduationCap, PencilLine } from "lucide-react";
 import { useMemo, useState } from "react";
-import type { StudyProgram } from "@/features/master/study-program";
+import type { StudyProgram } from "@/features/shared/master/study-program";
 
 type PilihanProdiProps = {
   programs: StudyProgram[];

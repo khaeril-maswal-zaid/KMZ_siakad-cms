@@ -1,4 +1,4 @@
-import RegistrationPage from "@/features/registration/page/RegistrationPage";
+import RegistrationPage from "@/features/auth/registration/page/RegistrationPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { useAdmissionPaths } from "@/features/master/admission-path";
-import { useClassSchedules } from "@/features/master/class-schedule";
-import { useStudyPrograms } from "@/features/master/study-program";
+import { useAdmissionPaths } from "@/features/shared/master/admission-path";
+import { useClassSchedules } from "@/features/shared/master/class-schedule";
+import { useStudyPrograms } from "@/features/shared/master/study-program";
 
 import type { ProgramSelectionPageData } from "./types";
 

@@ -1,4 +1,4 @@
-import { InstitutionSettings } from "@/features/institution";
+import { InstitutionSettings } from "@/features/shared/institution";
 import { CampusProfile } from "@/types/campus-profile";
 
 export function mapCampusProfile(settings: InstitutionSettings): CampusProfile {

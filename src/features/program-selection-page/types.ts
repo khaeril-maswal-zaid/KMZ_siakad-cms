@@ -1,6 +1,6 @@
-import type { AdmissionPath } from "@/features/master/admission-path";
-import type { ClassSchedule } from "@/features/master/class-schedule";
-import type { StudyProgram } from "@/features/master/study-program";
+import type { AdmissionPath } from "@/features/shared/master/admission-path";
+import type { ClassSchedule } from "@/features/shared/master/class-schedule";
+import type { StudyProgram } from "@/features/shared/master/study-program";
 
 export type StudySelection = {
   level: string;

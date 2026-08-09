@@ -1,5 +1,5 @@
 import { MapPin } from "lucide-react";
-import type { ClassSchedule } from "@/features/master/class-schedule";
+import type { ClassSchedule } from "@/features/shared/master/class-schedule";
 import { ChoiceSection } from "./ChoiceSection";
 
 const studySessionLabels: Record<string, string> = {

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ProgramCard } from "./ProgramCard";
-import { StudyProgram } from "@/features/master/study-program";
+import { StudyProgram } from "@/features/shared/master/study-program";
 
 type ProgramSectionProps = {
   programs: StudyProgram[];
