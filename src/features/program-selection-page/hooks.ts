@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-
 import { useAdmissionPaths } from "@/features/master/admission-path";
 import { useClassSchedules } from "@/features/master/class-schedule";
 import { useStudyPrograms } from "@/features/master/study-program";

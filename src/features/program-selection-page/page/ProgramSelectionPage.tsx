@@ -23,15 +23,14 @@ export function ProgramSelectionPage({
   nextStep: () => void;
 }) {
   const router = useRouter();
-
   const { data, isLoading, error, refetch } = useProgramSelectionData();
-  const [selectedProgramId, setSelectedProgramId] = useState(
-    initialProgramId ?? "",
-  );
 
   const [selectedCampus, setSelectedCampus] = useState(""); //kampus
   const [selectedSession, setSelectedSession] = useState(""); //waktu kuliah
   const [selectedAdmissionPathId, setSelectedAdmissionPathId] = useState(""); //jalur masuk
+  const [selectedProgramId, setSelectedProgramId] = useState(
+    initialProgramId ?? "",
+  );
 
   const campuses = useMemo(() => {
     if (!data) return [];
