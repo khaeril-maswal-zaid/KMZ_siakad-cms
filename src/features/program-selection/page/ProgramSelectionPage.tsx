@@ -1,10 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
 import { SelectionSummaryCard } from "@/components/SelectionSummaryCard";
 import type { StudySelection } from "@/features/program-selection/types";
 import { useProgramSelectionData } from "@/features/program-selection/hooks";
+import { saveRegistrationSelection } from "@/features/auth/registration/api";
 import { LoadingComponent } from "@/components/LoadingComponent";
 import { ErrorComponent } from "@/components/ErrorComponent";
 import {
@@ -22,7 +23,7 @@ export function ProgramSelectionPage({
   initialProgramId?: string;
   nextStep: () => void;
 }) {
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const { data, isLoading, error, refetch } = useProgramSelectionData();
 
   const [selectedCampus, setSelectedCampus] = useState(""); //kampus
@@ -79,18 +80,12 @@ export function ProgramSelectionPage({
     selectedStudy.admissionPathId,
   );
 
-  useEffect(() => {
-    if (!data) return;
-  }, [campuses, data, selectedCampus]);
+  function continueRegistration() {
+    if (!selectedStudy || !canContinue) return;
 
-  useEffect(() => {
-    if (!selectedCampus) return;
-    if (selectedSession) return;
-  }, [availableStudySystems, selectedCampus, selectedSession]);
-
-  function continueRegistrationX() {
-    if (!canContinue) return;
-    router.push("/pendaftaran/registrasi");
+    saveRegistrationSelection(selectedStudy);
+    queryClient.setQueryData(["registration", "selection"], selectedStudy);
+    nextStep();
   }
 
   if (error) {
@@ -144,7 +139,7 @@ export function ProgramSelectionPage({
               waveName={data.waveName}
               registrationFee={data.registrationFee}
               actionLabel="Lanjutkan Registrasi"
-              onAction={nextStep}
+              onAction={continueRegistration}
               disabled={!canContinue}
             />
           </div>

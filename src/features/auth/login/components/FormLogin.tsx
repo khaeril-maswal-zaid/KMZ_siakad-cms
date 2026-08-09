@@ -126,7 +126,7 @@ export function FormLogin() {
       <p className="mt-5 text-center text-xs leading-5 text-slate-500">
         Belum punya akun?{" "}
         <Link
-          href="/pendaftaran/pilih-program"
+          href="/pendaftaran"
           className="font-bold text-blue-700 hover:text-blue-800"
         >
           Mulai pendaftaran

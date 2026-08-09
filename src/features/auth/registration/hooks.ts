@@ -2,15 +2,9 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { useProgramSelectionData } from "@/features/program-selection/hooks";
-import type {
-  ProgramSelectionPageData,
-  StudySelection,
-} from "@/features/program-selection/types";
+import type { StudySelection } from "@/features/program-selection/types";
 import { getStoredRegistrationSelection } from "./api";
-import {
-  createDefaultRegistrationSelection,
-  mapStoredSelectionToStudySelection,
-} from "./mapper";
+import { mapStoredSelectionToStudySelection } from "./mapper";
 
 export function useRegistrationData() {
   const programSelection = useProgramSelectionData();
@@ -25,13 +19,8 @@ export function useRegistrationData() {
     if (storageQuery.data) {
       return mapStoredSelectionToStudySelection(storageQuery.data);
     }
-
-    if (!programSelection.data) {
-      return null;
-    }
-
-    return createDefaultRegistrationSelection(programSelection.data);
-  }, [programSelection.data, storageQuery.data]);
+    return null;
+  }, [storageQuery.data]);
 
   return {
     selection,

@@ -3,7 +3,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -38,10 +37,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     auth.removeToken();
     setIsAuthenticated(false);
   };
-
-  useEffect(() => {
-    refresh();
-  }, []);
 
   const value = useMemo<AuthContextValue>(
     () => ({

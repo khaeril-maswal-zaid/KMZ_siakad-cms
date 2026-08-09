@@ -85,7 +85,7 @@ export function ProgramCard({ program, index }: ProgramCardProps) {
       </div>
 
       <Link
-        href={`/pendaftaran/pilih-program?program_studi=${program.id}`}
+        href={`/pendaftaran?program_studi=${program.id}`}
         className="relative mt-7 inline-flex min-h-11 items-center justify-between rounded-xl border border-slate-200 px-4 text-sm font-bold text-slate-800 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
       >
         Daftar sekarang

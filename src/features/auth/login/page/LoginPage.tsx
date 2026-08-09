@@ -28,7 +28,7 @@ export function LoginPage() {
             <CampusLogo />
           </Link>
           <Link
-            href="/pendaftaran/pilih-program"
+            href="/pendaftaran"
             className="inline-flex min-h-10 items-center justify-center rounded-xl px-4 text-sm font-bold text-slate-600 transition-colors hover:bg-slate-50 hover:text-blue-700"
           >
             Daftar PMB

@@ -2,8 +2,8 @@ export const ROUTES = {
   PUBLIC: {
     HOME: "/",
     LOGIN: "/login",
-    REGISTER: "/register",
-    STUDY_PROGRAM: "/pilih-prodi",
+    REGISTER: "/pendaftaran",
+    STUDY_PROGRAM: "/pendaftaran",
   },
 
   DASHBOARD: {
