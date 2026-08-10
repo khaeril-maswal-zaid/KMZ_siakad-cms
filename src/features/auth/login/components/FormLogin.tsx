@@ -48,6 +48,7 @@ export function FormLogin() {
           : "Login gagal. Periksa email dan password Anda.";
 
       toast.error(message);
+      console.log(message);
     }
   }
 
