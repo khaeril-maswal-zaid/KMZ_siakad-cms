@@ -1,5 +1,4 @@
 import api from "@/lib/axios";
-
 import { mapLoginApiResponse } from "./mapper";
 import type { AuthSession, LoginApiResponse, LoginCredentials } from "./types";
 

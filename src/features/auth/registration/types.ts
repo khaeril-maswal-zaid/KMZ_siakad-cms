@@ -22,8 +22,6 @@ export type RegisterUserResponse = {
     token?: string;
     message?: string;
   };
-  token?: string;
-  message?: string;
 };
 
 export type RegistrationSession = {

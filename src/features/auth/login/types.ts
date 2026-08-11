@@ -3,11 +3,6 @@ export interface LoginCredentials {
   password: string;
 }
 
-export interface LoginApiResourceIdentifier {
-  id: string;
-  type: string;
-}
-
 export interface LoginApiApplication {
   id: string;
   registration_number?: string;
@@ -44,19 +39,7 @@ export interface LoginApiResponse {
       roles?: string[];
       [key: string]: unknown;
     };
-    relationships?: {
-      pmbApplication?: {
-        data: LoginApiResourceIdentifier | null;
-      };
-      [key: string]: unknown;
-    };
   };
-  included?: Array<{
-    id: string;
-    type: string;
-    attributes: Record<string, unknown>;
-    relationships?: Record<string, unknown>;
-  }>;
   meta?: {
     token?: string;
     message?: string;

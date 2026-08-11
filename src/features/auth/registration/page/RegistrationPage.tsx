@@ -57,6 +57,7 @@ export default function RegistrationPage({
         class_schedule_id: selection.studySystemId,
         study_program_id: selection.programId,
       });
+
       login(session.token);
       toast.success(session.message ?? "Registrasi berhasil.");
       router.push("/");

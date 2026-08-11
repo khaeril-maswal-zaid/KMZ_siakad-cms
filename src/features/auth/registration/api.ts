@@ -44,7 +44,7 @@ export async function registerUser(
     "/auth/register-user",
     payload,
   );
-  const token = data.meta?.token ?? data.token;
+  const token = data.meta?.token;
 
   if (!token) {
     throw new Error("Response registrasi tidak mengembalikan token");
@@ -52,6 +52,6 @@ export async function registerUser(
 
   return {
     token,
-    message: data.meta?.message ?? data.message,
+    message: data.meta?.message,
   };
 }
