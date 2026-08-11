@@ -36,7 +36,7 @@ export function Header() {
           </Link>
 
           <Link
-            href="/pendaftaran"
+            href="#program-studi"
             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5 hover:bg-blue-700 sm:px-5"
           >
             Daftar

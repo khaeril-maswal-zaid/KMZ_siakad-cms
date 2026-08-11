@@ -19,19 +19,12 @@ import { registrationFormSchema } from "../schema";
 const inputClassName =
   "min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100";
 
-export function RegistrationForm({
-  onSubmit,
-  isSubmitting = false,
-}: {
-  onSubmit: (values: RegistrationFormValues) => void;
-  isSubmitting?: boolean;
-}) {
+export function RegistrationForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const {
     register,
-    handleSubmit,
     control,
     formState: { errors },
   } = useForm<RegistrationFormValues>({
@@ -56,12 +49,7 @@ export function RegistrationForm({
   ].filter(Boolean).length;
 
   return (
-    <form
-      id="registration-form"
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-7"
-      noValidate
-    >
+    <form id="registration-form" className="space-y-7" noValidate>
       <div className="overflow-hidden rounded-[28px] border border-blue-100 bg-blue-50/70 p-5 shadow-[0_14px_45px_rgba(30,64,110,0.04)] sm:p-7">
         <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-blue-700">
           Buat akun camaba
@@ -195,14 +183,6 @@ export function RegistrationForm({
             </FormField>
           </div>
         </div>
-
-        <button
-          type="submit"
-          className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Menyimpan..." : "Simpan dan lanjutkan"}
-        </button>
       </div>
     </form>
   );

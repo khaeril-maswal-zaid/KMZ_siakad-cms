@@ -44,15 +44,13 @@ export default function RegistrationPage({
       description="Isi data akun yang aktif agar seluruh informasi dan progres PMB dapat kamu pantau dengan aman."
     >
       <section className="mx-auto grid max-w-[1180px] gap-8 px-5 py-10 sm:px-8 sm:py-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:px-10">
-        <RegistrationForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+        <RegistrationForm />
 
         <RegistrationSummary
           selection={selection}
           waveName={waveName}
           registrationFee={registrationFee}
-          onSubmit={() => {
-            toast.info("Aksi ringkasan belum terhubung ke backend.");
-          }}
+          onSubmit={handleSubmit("")}
           prevStep={prevStep}
           disabled={!selection}
           isLoading={isSubmitting}
