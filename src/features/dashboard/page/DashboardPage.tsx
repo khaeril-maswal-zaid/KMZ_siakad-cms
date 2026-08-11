@@ -1,14 +1,24 @@
 "use client";
 
 import { PmbFlowShell } from "@/components/PmbFowShell";
-import { getDashboardData } from "../mapper";
+import { ErrorComponent } from "@/components/ErrorComponent";
+import { LoadingComponent } from "@/components/LoadingComponent";
 import { NextActionCard } from "../components/NextActionCard";
 import { ProgressCard } from "../components/ProgressCard";
 import { SelectionCard } from "../components/SelectionCard";
 import { StatusCards } from "../components/StatusCards";
+import { useDashboard } from "../hooks";
 
 export function DashboardPage() {
-  const data = getDashboardData();
+  const { data, isLoading, error, refetch } = useDashboard();
+
+  if (error) {
+    return <ErrorComponent refetch={refetch} />;
+  }
+
+  if (isLoading || !data) {
+    return <LoadingComponent />;
+  }
 
   return (
     <PmbFlowShell
