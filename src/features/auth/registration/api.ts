@@ -1,4 +1,7 @@
 import type { StudySelection } from "@/features/program-selection/types";
+import api from "@/lib/axios";
+
+import type { RegisterUserPayload } from "./types";
 
 export const REGISTRATION_SELECTION_KEY = "pmb_registration_selection";
 
@@ -28,4 +31,10 @@ export async function getStoredRegistrationSelection(): Promise<StudySelection |
   } catch {
     return null;
   }
+}
+
+export async function registerUser(payload: RegisterUserPayload) {
+  const { data } = await api.post("/auth/register-user", payload);
+
+  return data;
 }

@@ -1,7 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AtSign,
   Eye,
@@ -11,15 +9,18 @@ import {
   UserRound,
 } from "lucide-react";
 import { useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useWatch, type UseFormReturn } from "react-hook-form";
 
 import type { RegistrationFormValues } from "../types";
-import { registrationFormSchema } from "../schema";
 
 const inputClassName =
   "min-h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100";
 
-export function RegistrationForm() {
+export function RegistrationForm({
+  form,
+}: {
+  form: UseFormReturn<RegistrationFormValues>;
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -27,18 +28,7 @@ export function RegistrationForm() {
     register,
     control,
     formState: { errors },
-  } = useForm<RegistrationFormValues>({
-    resolver: zodResolver(registrationFormSchema),
-    mode: "onTouched",
-    reValidateMode: "onChange",
-    defaultValues: {
-      fullName: "",
-      email: "",
-      whatsapp: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
+  } = form;
 
   const password = useWatch({ control, name: "password" });
   const passwordScore = [
@@ -129,16 +119,10 @@ export function RegistrationForm() {
             label="Password"
             error={errors.password?.message}
             icon={<LockKeyhole className="size-4" />}
-            action={
-              <PasswordToggle
-                visible={showPassword}
-                onClick={() => setShowPassword((current) => !current)}
-              />
-            }
           >
             <input
               {...register("password")}
-              type={showPassword ? "text" : "password"}
+              type="password"
               className={`${inputClassName} px-11`}
               placeholder="Minimal 8 karakter"
               autoComplete="new-password"
@@ -166,16 +150,10 @@ export function RegistrationForm() {
               label="Konfirmasi password"
               error={errors.confirmPassword?.message}
               icon={<LockKeyhole className="size-4" />}
-              action={
-                <PasswordToggle
-                  visible={showConfirmation}
-                  onClick={() => setShowConfirmation((current) => !current)}
-                />
-              }
             >
               <input
                 {...register("confirmPassword")}
-                type={showConfirmation ? "text" : "password"}
+                type="password"
                 className={`${inputClassName} px-11`}
                 placeholder="Ulangi password"
                 autoComplete="new-password"
@@ -219,24 +197,5 @@ function FormField({
         </span>
       )}
     </label>
-  );
-}
-
-function PasswordToggle({
-  visible,
-  onClick,
-}: {
-  visible: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={visible ? "Sembunyikan password" : "Tampilkan password"}
-      className="absolute right-2.5 top-1/2 z-10 grid size-8 -translate-y-1/2 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
-    >
-      {visible ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-    </button>
   );
 }

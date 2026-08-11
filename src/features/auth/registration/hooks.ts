@@ -1,10 +1,17 @@
 import { useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useProgramSelectionData } from "@/features/program-selection/hooks";
 import type { StudySelection } from "@/features/program-selection/types";
-import { getStoredRegistrationSelection } from "./api";
+import { getStoredRegistrationSelection, registerUser } from "./api";
 import { mapStoredSelectionToStudySelection } from "./mapper";
+import type { RegisterUserPayload } from "./types";
+
+export function useRegisterUser() {
+  return useMutation({
+    mutationFn: (payload: RegisterUserPayload) => registerUser(payload),
+  });
+}
 
 export function useRegistrationData() {
   const programSelection = useProgramSelectionData();
