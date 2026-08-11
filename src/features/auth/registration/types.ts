@@ -16,3 +16,17 @@ export type RegisterUserPayload = {
   class_schedule_id: string;
   study_program_id: string;
 };
+
+export type RegisterUserResponse = {
+  meta?: {
+    token?: string;
+    message?: string;
+  };
+  token?: string;
+  message?: string;
+};
+
+export type RegistrationSession = {
+  token: string;
+  message?: string;
+};

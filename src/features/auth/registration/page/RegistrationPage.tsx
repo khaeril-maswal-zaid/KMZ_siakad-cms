@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { PmbFlowShell } from "@/components/PmbFowShell";
 import { LoadingComponent } from "@/components/LoadingComponent";
 import { ErrorComponent } from "@/components/ErrorComponent";
+import { useAuth } from "@/providers";
 import { RegistrationForm } from "../components/RegistrationForm";
 import { RegistrationSummary } from "../components/RegistrationSummary";
 import { useRegisterUser, useRegistrationData } from "../hooks";
@@ -18,6 +20,8 @@ export default function RegistrationPage({
 }: {
   prevStep: () => void;
 }) {
+  const router = useRouter();
+  const { login } = useAuth();
   const { selection, waveName, registrationFee, isLoading, error, refetch } =
     useRegistrationData();
 
@@ -43,7 +47,7 @@ export default function RegistrationPage({
     }
 
     try {
-      await registerUserMutation.mutateAsync({
+      const session = await registerUserMutation.mutateAsync({
         full_name: values.fullName,
         email: values.email,
         phone: values.whatsapp,
@@ -53,7 +57,9 @@ export default function RegistrationPage({
         class_schedule_id: selection.studySystemId,
         study_program_id: selection.programId,
       });
-      toast.success("Akun pendaftaran berhasil dibuat.");
+      login(session.token);
+      toast.success(session.message ?? "Registrasi berhasil.");
+      router.push("/");
     } catch (requestError: unknown) {
       const responseData = axios.isAxiosError(requestError)
         ? (requestError.response?.data as
