@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUp, LogOut } from "lucide-react";
 import { CampusLogo } from "@/components/CampusLogo";
+import { useLogout } from "@/features/auth/logout/hooks";
 import { useAuth } from "@/providers";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -8,11 +9,18 @@ import { useRouter } from "next/navigation";
 export function PmbSiteHeader() {
   const router = useRouter();
   const { isAuthenticated, logout } = useAuth();
+  const logoutMutation = useLogout();
 
   async function handleLogout() {
-    logout();
-    toast.success("Logout berhasil");
-    router.push("/");
+    try {
+      await logoutMutation.mutateAsync();
+      toast.success("Logout berhasil");
+    } catch {
+      toast.error("Sesi lokal diakhiri, tetapi logout ke server gagal");
+    } finally {
+      logout();
+      router.push("/");
+    }
   }
 
   return (
@@ -30,6 +38,7 @@ export function PmbSiteHeader() {
             <button
               type="button"
               onClick={handleLogout}
+              disabled={logoutMutation.isPending}
               className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 text-xs font-bold text-slate-600 transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-700 sm:px-4 sm:text-sm"
             >
               <LogOut className="size-4" />
