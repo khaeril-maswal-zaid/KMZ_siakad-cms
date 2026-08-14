@@ -7,11 +7,12 @@ import {
   AlertTriangle,
   Check,
   GraduationCap,
+  LoaderCircle,
   MapPin,
   Route,
   X,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type StudySelectionDialogValues = {
   programId: string;
@@ -19,81 +20,86 @@ export type StudySelectionDialogValues = {
   admissionPathId: string;
 };
 
-type DummyStudySystem = {
-  id: string;
-  name: string;
-};
-
-type DummyAdmissionPath = {
-  id: string;
-  name: string;
-  description: string;
-};
-
-type CurrentSelection = StudySelectionDialogValues & {
-  level: string;
-};
-
-const defaultCurrentSelection: CurrentSelection = {
-  level: "S1",
-  programId: "ilkom",
-  studySystemId: "bekasi-pagi",
-  admissionPathId: "jalur-reguler",
-};
-
-const referenceOptions: {
-  studySystems: DummyStudySystem[];
-  admissionPaths: DummyAdmissionPath[];
-} = {
-  studySystems: [
-    { id: "bekasi-pagi", name: "Bekasi Pagi" },
-    { id: "bekasi-sore", name: "Bekasi Sore" },
-    { id: "jakarta-weekend", name: "Jakarta Weekend" },
-  ],
-  admissionPaths: [
-    {
-      id: "jalur-reguler",
-      name: "PMB Reguler",
-      description: "Jalur umum untuk calon mahasiswa baru lulusan SMA/SMK/MA.",
-    },
-    {
-      id: "jalur-khusus",
-      name: "PMB Khusus",
-      description:
-        "Jalur prioritas untuk calon mahasiswa dengan prestasi unggul.",
-    },
-    {
-      id: "jalur-transfer",
-      name: "Transfer Mahasiswa",
-      description:
-        "Jalur pendaftaran untuk mahasiswa pindahan dari institusi lain.",
-    },
-  ],
+type StudyProgramDialogProps = {
+  open: boolean;
+  currentSelection: StudySelectionDialogValues;
+  resetsProgress?: boolean;
+  isSaving?: boolean;
+  onClose: () => void;
+  onConfirm: (values: StudySelectionDialogValues) => void;
 };
 
 export function StudyProgramDialog({
   open,
-  currentSelection = defaultCurrentSelection,
+  currentSelection,
   resetsProgress = false,
+  isSaving = false,
   onClose,
   onConfirm,
-  selectedProgramId,
-  initialProgramId,
-}: {
-  open: boolean;
-  currentSelection?: CurrentSelection;
-  resetsProgress?: boolean;
-  onClose: () => void;
-  onConfirm: (values: StudySelectionDialogValues) => void;
-  selectedProgramId?: string;
-  initialProgramId?: string;
-}) {
+}: StudyProgramDialogProps) {
   const {
     data: programSelectionData,
     isLoading,
     error,
     refetch,
   } = useProgramSelectionData();
+
+  const [selectedLevel, setSelectedLevel] = useState<string>();
+  const [programId, setProgramId] = useState(currentSelection.programId);
+  const [studySystemId, setStudySystemId] = useState(
+    currentSelection.studySystemId,
+  );
+  const [admissionPathId, setAdmissionPathId] = useState(
+    currentSelection.admissionPathId,
+  );
+
+  const programs = useMemo(
+    () => programSelectionData?.programs ?? [],
+    [programSelectionData?.programs],
+  );
+  const levels = useMemo(
+    () => [...new Set(programs.map((program) => program.level))],
+    [programs],
+  );
+  const selectedProgram = useMemo(
+    () => programs.find((program) => program.id === programId),
+    [programs, programId],
+  );
+  const activeLevel =
+    selectedLevel && levels.includes(selectedLevel)
+      ? selectedLevel
+      : (selectedProgram?.level ?? (levels.includes("S1") ? "S1" : levels[0]));
+  const visiblePrograms = useMemo(
+    () => programs.filter((program) => program.level === activeLevel),
+    [programs, activeLevel],
+  );
+
+  const hasChanges =
+    programId !== currentSelection.programId ||
+    studySystemId !== currentSelection.studySystemId ||
+    admissionPathId !== currentSelection.admissionPathId;
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !isSaving) {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [isSaving, onClose, open]);
+
+  if (!open) return null;
 
   if (error) {
     return <ErrorComponent refetch={refetch} />;
@@ -103,92 +109,20 @@ export function StudyProgramDialog({
     return <LoadingComponent />;
   }
 
-  const programs = programSelectionData.programs;
-
-  const [selectedLevel, setSelectedLevel] = useState<string>();
-  const [isChangingProgram, setIsChangingProgram] = useState(false);
-
-  const programId = selectedProgramId || initialProgramId || "";
-
-  const selectedProgram = useMemo(
-    () => programs.find((program) => program.id === programId),
-    [programs, programId],
-  );
-
-  const levels = useMemo(
-    () => [...new Set(programs.map((program) => program.level))],
-    [programs],
-  );
-
-  const activeLevel =
-    selectedLevel && levels.includes(selectedLevel)
-      ? selectedLevel
-      : (selectedProgram?.level ?? (levels.includes("S1") ? "S1" : levels[0]));
-
-  const visiblePrograms = useMemo(
-    () => programs.filter((program) => program.level === activeLevel),
-    [programs, activeLevel],
-  );
-
-  //----------------------------------------------------------------------
-
-  const safeCurrentSelection = currentSelection ?? defaultCurrentSelection;
-
-  const [studySystemId, setStudySystemId] = useState(
-    safeCurrentSelection.studySystemId,
-  );
-
-  const [admissionPathId, setAdmissionPathId] = useState(
-    safeCurrentSelection.admissionPathId,
-  );
-
-  useEffect(() => {
-    if (!levels.includes(activeLevel)) {
-      setActiveLevel(levels[0] ?? "S1");
-    }
-  }, [activeLevel, levels]);
-
-  const hasChanges =
-    programId !== safeCurrentSelection.programId ||
-    studySystemId !== safeCurrentSelection.studySystemId ||
-    admissionPathId !== safeCurrentSelection.admissionPathId;
-
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, [onClose, open]);
-
-  if (!open || !referenceOptions) {
-    return null;
-  }
-
   return (
     <div className="fixed inset-0 z-[100] grid place-items-end bg-slate-950/45 p-0 backdrop-blur-sm sm:place-items-center sm:p-6">
       <button
         type="button"
         aria-label="Tutup dialog ubah pilihan studi"
         onClick={onClose}
+        disabled={isSaving}
         className="absolute inset-0 cursor-default"
       />
       <section
         role="dialog"
         aria-modal="true"
         aria-labelledby="study-dialog-title"
+        aria-busy={isSaving}
         className="relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-t-[30px] bg-white shadow-[0_30px_90px_rgba(15,23,42,0.28)] sm:max-w-3xl sm:rounded-[30px]"
       >
         <header className="flex items-start justify-between gap-5 border-b border-slate-100 px-5 py-5 sm:px-7 sm:py-6">
@@ -215,9 +149,9 @@ export function StudyProgramDialog({
           <button
             type="button"
             onClick={onClose}
-            autoFocus
+            disabled={isSaving}
             aria-label="Tutup"
-            className="grid size-9 shrink-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+            className="grid size-9 shrink-0 place-items-center rounded-xl text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <X className="size-4" />
           </button>
@@ -245,43 +179,46 @@ export function StudyProgramDialog({
               >
                 {levels.map((level) => (
                   <button
-                    key={String(level)}
+                    key={level}
                     type="button"
                     aria-pressed={activeLevel === level}
+                    disabled={isSaving}
                     onClick={() => {
-                      // setActiveLevel(level);
-                      // if (
-                      //   !programs.some(
-                      //     (item: DummyProgram) =>
-                      //       item.id === programId && item.level === level,
-                      //   )
-                      // ) {
-                      //   setProgramId("");
-                      // }
+                      setSelectedLevel(level);
+
+                      if (selectedProgram?.level !== level) {
+                        setProgramId("");
+                      }
                     }}
-                    className={`min-h-9 min-w-14 rounded-xl px-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                    className={`min-h-9 min-w-14 rounded-xl px-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-60 ${
                       activeLevel === level
                         ? "bg-white text-blue-700 shadow-sm"
                         : "text-slate-500 hover:text-slate-900"
                     }`}
                   >
-                    {String(level)}
+                    {level}
                   </button>
                 ))}
               </div>
             )}
 
-            <div className="grid gap-3 sm:grid-cols-2" role="radiogroup">
+            <div
+              className="grid gap-3 sm:grid-cols-2"
+              role="radiogroup"
+              aria-label="Pilih program studi"
+            >
               {visiblePrograms.map((program) => {
                 const selected = program.id === programId;
+
                 return (
                   <button
                     key={program.id}
                     type="button"
                     role="radio"
                     aria-checked={selected}
+                    disabled={isSaving}
                     onClick={() => setProgramId(program.id)}
-                    className={`relative rounded-2xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                    className={`relative rounded-2xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-60 ${
                       selected
                         ? "border-blue-600 bg-blue-50"
                         : "border-slate-200 hover:border-blue-200 hover:bg-slate-50"
@@ -291,18 +228,10 @@ export function StudyProgramDialog({
                       <span className="rounded-lg bg-white px-2 py-1 text-[9px] font-extrabold text-slate-500 shadow-sm">
                         {program.level}
                       </span>
-                      <span
-                        className={`grid size-5 place-items-center rounded-full ${
-                          selected
-                            ? "bg-blue-600 text-white"
-                            : "border border-slate-200 text-transparent"
-                        }`}
-                      >
-                        <Check className="size-3" />
-                      </span>
+                      <SelectionIndicator selected={selected} />
                     </div>
                     <p className="mt-3 text-[9px] font-extrabold uppercase tracking-[0.1em] text-blue-600">
-                      {program.faculty}xxx
+                      {program.faculty?.name ?? "-"}
                     </p>
                     <p className="mt-1.5 text-sm font-bold text-slate-950">
                       {program.name}
@@ -318,23 +247,39 @@ export function StudyProgramDialog({
             title="Sistem kuliah"
             description="Pilih lokasi dan jadwal belajar yang paling sesuai."
           >
-            <div className="grid gap-2 sm:grid-cols-3" role="radiogroup">
-              {referenceOptions.studySystems.map((system) => {
-                const selected = studySystemId === system.id;
+            <div
+              className="grid gap-2 sm:grid-cols-2"
+              role="radiogroup"
+              aria-label="Pilih sistem kuliah"
+            >
+              {programSelectionData.classSchedules.map((classSchedule) => {
+                const selected = studySystemId === classSchedule.id;
+
                 return (
                   <button
-                    key={system.id}
+                    key={classSchedule.id}
                     type="button"
                     role="radio"
                     aria-checked={selected}
-                    onClick={() => setStudySystemId(system.id)}
-                    className={`min-h-11 rounded-2xl border px-3 text-left text-xs font-extrabold leading-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                    disabled={isSaving}
+                    onClick={() => setStudySystemId(classSchedule.id)}
+                    className={`rounded-2xl border p-3 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-60 ${
                       selected
-                        ? "border-blue-600 bg-blue-50 text-blue-700"
-                        : "border-slate-200 text-slate-600 hover:border-blue-200 hover:bg-slate-50"
+                        ? "border-blue-600 bg-blue-50"
+                        : "border-slate-200 hover:border-blue-200 hover:bg-slate-50"
                     }`}
                   >
-                    {system.name}
+                    <span className="flex items-start justify-between gap-3">
+                      <span>
+                        <span className="block text-xs font-extrabold text-slate-900">
+                          {classSchedule.name}
+                        </span>
+                        <span className="mt-1 block text-[11px] text-slate-500">
+                          {classSchedule.campus}
+                        </span>
+                      </span>
+                      <SelectionIndicator selected={selected} />
+                    </span>
                   </button>
                 );
               })}
@@ -346,17 +291,23 @@ export function StudyProgramDialog({
             title="Jalur masuk"
             description="Sesuaikan dengan riwayat pendidikan calon mahasiswa."
           >
-            <div className="grid gap-3" role="radiogroup">
-              {referenceOptions.admissionPaths.map((path) => {
+            <div
+              className="grid gap-3"
+              role="radiogroup"
+              aria-label="Pilih jalur masuk"
+            >
+              {programSelectionData.admissionPaths.map((path) => {
                 const selected = admissionPathId === path.id;
+
                 return (
                   <button
                     key={path.id}
                     type="button"
                     role="radio"
                     aria-checked={selected}
+                    disabled={isSaving}
                     onClick={() => setAdmissionPathId(path.id)}
-                    className={`rounded-2xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
+                    className={`rounded-2xl border p-4 text-left transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 disabled:cursor-not-allowed disabled:opacity-60 ${
                       selected
                         ? "border-blue-600 bg-blue-50"
                         : "border-slate-200 hover:border-blue-200 hover:bg-slate-50"
@@ -371,15 +322,7 @@ export function StudyProgramDialog({
                           {path.description}
                         </span>
                       </span>
-                      <span
-                        className={`grid size-5 shrink-0 place-items-center rounded-full ${
-                          selected
-                            ? "bg-blue-600 text-white"
-                            : "border border-slate-200 text-transparent"
-                        }`}
-                      >
-                        <Check className="size-3" />
-                      </span>
+                      <SelectionIndicator selected={selected} />
                     </span>
                   </button>
                 );
@@ -392,29 +335,45 @@ export function StudyProgramDialog({
           <button
             type="button"
             onClick={onClose}
-            className="min-h-11 rounded-xl px-5 text-sm font-bold text-slate-500 transition-colors hover:bg-white hover:text-slate-800"
+            disabled={isSaving}
+            className="min-h-11 rounded-xl px-5 text-sm font-bold text-slate-500 transition-colors hover:bg-white hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Batal
           </button>
           <button
             type="button"
             disabled={
-              !programId || !studySystemId || !admissionPathId || !hasChanges
+              isSaving ||
+              !programId ||
+              !studySystemId ||
+              !admissionPathId ||
+              !hasChanges
             }
             onClick={() =>
-              onConfirm({
-                programId,
-                studySystemId,
-                admissionPathId,
-              })
+              onConfirm({ programId, studySystemId, admissionPathId })
             }
-            className="min-h-11 rounded-xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
           >
-            Simpan pilihan baru
+            {isSaving && <LoaderCircle className="size-4 animate-spin" />}
+            {isSaving ? "Menyimpan..." : "Simpan pilihan baru"}
           </button>
         </footer>
       </section>
     </div>
+  );
+}
+
+function SelectionIndicator({ selected }: { selected: boolean }) {
+  return (
+    <span
+      className={`grid size-5 shrink-0 place-items-center rounded-full ${
+        selected
+          ? "bg-blue-600 text-white"
+          : "border border-slate-200 text-transparent"
+      }`}
+    >
+      <Check className="size-3" />
+    </span>
   );
 }
 
@@ -424,10 +383,10 @@ function DialogSection({
   description,
   children,
 }: {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <section className="rounded-3xl border border-slate-200 bg-white p-4">

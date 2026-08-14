@@ -73,13 +73,22 @@ export type DashboardProcessStep = {
 };
 
 export type DashboardSelection = {
+  programId: string;
   level: string;
   faculty: string;
   programName: string;
   waveName: string;
+  studySystemId: string;
   studySystem: string;
+  admissionPathId: string;
   admissionPathName: string;
   registrationFee: string;
+};
+
+export type UpdateSelectionPayload = {
+  study_program_id: string;
+  class_schedule_id: string;
+  admission_path_id: string;
 };
 
 export type DashboardData = {

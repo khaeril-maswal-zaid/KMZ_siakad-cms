@@ -1,4 +1,4 @@
-import { CheckCircle2, CreditCard, ReceiptText, UserRound } from "lucide-react";
+import { CreditCard, ReceiptText, UserRound } from "lucide-react";
 import { createElement } from "react";
 
 import type {
@@ -171,11 +171,14 @@ export function mapDashboardResponse(
     ],
 
     selection: {
+      programId: studyProgram?.id ?? "",
       level: studyProgram?.attributes.level ?? EMPTY_VALUE,
       faculty: faculty?.attributes.name ?? EMPTY_VALUE,
       programName: studyProgram?.attributes.name ?? EMPTY_VALUE,
       waveName: admissionPeriod?.attributes.name ?? EMPTY_VALUE,
+      studySystemId: classSchedule?.id ?? "",
       studySystem: classSchedule?.attributes.name ?? EMPTY_VALUE,
+      admissionPathId: admissionPath?.id ?? "",
       admissionPathName: admissionPath?.attributes.name ?? EMPTY_VALUE,
       registrationFee: EMPTY_VALUE,
     },
