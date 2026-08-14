@@ -1,6 +1,6 @@
 "use client";
 
-import { PmbFlowShell } from "@/components/PmbFowShell";
+import { PmbFlowShell } from "@/components/PmbFlowShell";
 import { ErrorComponent } from "@/components/ErrorComponent";
 import { LoadingComponent } from "@/components/LoadingComponent";
 import { NextActionCard } from "../components/NextActionCard";

@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { PmbFlowShell } from "@/components/PmbFowShell";
+import { PmbFlowShell } from "@/components/PmbFlowShell";
 import { LoadingComponent } from "@/components/LoadingComponent";
 import { ErrorComponent } from "@/components/ErrorComponent";
 import { useAuth } from "@/providers";

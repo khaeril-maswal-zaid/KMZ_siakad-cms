@@ -14,7 +14,7 @@ import {
   JalurMasuk,
   SistemKuliah,
 } from "@/features/program-selection/components";
-import { PmbFlowShell } from "@/components/PmbFowShell";
+import { PmbFlowShell } from "@/components/PmbFlowShell";
 
 export function ProgramSelectionPage({
   initialProgramId,

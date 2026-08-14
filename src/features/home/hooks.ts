@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useInstitution } from "@/features/shared/institution";
 import { useStudyPrograms } from "@/features/shared/master/study-program";
-import { admissionSteps } from "./mapper";
+import { admissionSteps } from "./constants";
 
 export function useHome() {
   const institution = useInstitution();
