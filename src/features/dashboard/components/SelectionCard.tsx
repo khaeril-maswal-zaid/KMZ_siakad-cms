@@ -1,6 +1,8 @@
 import { CalendarDays, GraduationCap, MapPin, Route } from "lucide-react";
 import type { DashboardSelection } from "../types";
 import { useCampusProfile } from "@/hooks/campus-profile";
+import { StudyProgramDialog } from "./study-program-dialog";
+import { useState } from "react";
 
 export function SelectionCard({
   selection,
@@ -41,6 +43,7 @@ export function SelectionCard({
   ];
 
   const campus = useCampusProfile();
+  const [selectionDialogOpen, setSelectionDialogOpen] = useState(false);
 
   return (
     <aside className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(30,64,110,0.1)]">
@@ -70,12 +73,20 @@ export function SelectionCard({
         ))}
         <button
           type="button"
-          disabled
-          className="min-h-11 w-full rounded-xl border border-slate-200 px-4 text-xs font-bold text-slate-400 disabled:cursor-not-allowed disabled:bg-slate-50"
+          onClick={() => setSelectionDialogOpen(true)}
+          className="min-h-11 w-full rounded-xl border border-slate-200 px-4 text-xs font-bold text-slate-600 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
         >
           Pilihan studi tersimpan
         </button>
       </div>
+
+      {selectionDialogOpen && (
+        <StudyProgramDialog
+          open
+          onClose={() => setSelectionDialogOpen(false)}
+          onConfirm={() => setSelectionDialogOpen(false)}
+        />
+      )}
     </aside>
   );
 }

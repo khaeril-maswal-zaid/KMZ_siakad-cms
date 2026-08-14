@@ -1,5 +1,8 @@
 "use client";
 
+import { ErrorComponent } from "@/components/ErrorComponent";
+import { LoadingComponent } from "@/components/LoadingComponent";
+import { useProgramSelectionData } from "@/features/program-selection";
 import {
   AlertTriangle,
   Check,
@@ -16,38 +19,139 @@ export type StudySelectionDialogValues = {
   admissionPathId: string;
 };
 
+type DummyStudySystem = {
+  id: string;
+  name: string;
+};
+
+type DummyAdmissionPath = {
+  id: string;
+  name: string;
+  description: string;
+};
+
+type CurrentSelection = StudySelectionDialogValues & {
+  level: string;
+};
+
+const defaultCurrentSelection: CurrentSelection = {
+  level: "S1",
+  programId: "ilkom",
+  studySystemId: "bekasi-pagi",
+  admissionPathId: "jalur-reguler",
+};
+
+const referenceOptions: {
+  studySystems: DummyStudySystem[];
+  admissionPaths: DummyAdmissionPath[];
+} = {
+  studySystems: [
+    { id: "bekasi-pagi", name: "Bekasi Pagi" },
+    { id: "bekasi-sore", name: "Bekasi Sore" },
+    { id: "jakarta-weekend", name: "Jakarta Weekend" },
+  ],
+  admissionPaths: [
+    {
+      id: "jalur-reguler",
+      name: "PMB Reguler",
+      description: "Jalur umum untuk calon mahasiswa baru lulusan SMA/SMK/MA.",
+    },
+    {
+      id: "jalur-khusus",
+      name: "PMB Khusus",
+      description:
+        "Jalur prioritas untuk calon mahasiswa dengan prestasi unggul.",
+    },
+    {
+      id: "jalur-transfer",
+      name: "Transfer Mahasiswa",
+      description:
+        "Jalur pendaftaran untuk mahasiswa pindahan dari institusi lain.",
+    },
+  ],
+};
+
 export function StudyProgramDialog({
   open,
-  currentSelection,
-  programs,
-  resetsProgress,
+  currentSelection = defaultCurrentSelection,
+  resetsProgress = false,
   onClose,
   onConfirm,
+  selectedProgramId,
+  initialProgramId,
 }: {
   open: boolean;
-  currentSelection: any;
-  programs: any;
-  resetsProgress: boolean;
+  currentSelection?: CurrentSelection;
+  resetsProgress?: boolean;
   onClose: () => void;
   onConfirm: (values: StudySelectionDialogValues) => void;
+  selectedProgramId?: string;
+  initialProgramId?: string;
 }) {
-  const [activeLevel, setActiveLevel] = useState(currentSelection.level);
-  const [programId, setProgramId] = useState(currentSelection.programId);
-  const [studySystemId, setStudySystemId] = useState(
-    currentSelection.studySystemId,
+  const {
+    data: programSelectionData,
+    isLoading,
+    error,
+    refetch,
+  } = useProgramSelectionData();
+
+  if (error) {
+    return <ErrorComponent refetch={refetch} />;
+  }
+
+  if (isLoading || !programSelectionData) {
+    return <LoadingComponent />;
+  }
+
+  const programs = programSelectionData.programs;
+
+  const [selectedLevel, setSelectedLevel] = useState<string>();
+  const [isChangingProgram, setIsChangingProgram] = useState(false);
+
+  const programId = selectedProgramId || initialProgramId || "";
+
+  const selectedProgram = useMemo(
+    () => programs.find((program) => program.id === programId),
+    [programs, programId],
   );
-  const [admissionPathId, setAdmissionPathId] = useState(
-    currentSelection.admissionPathId,
+
+  const levels = useMemo(
+    () => [...new Set(programs.map((program) => program.level))],
+    [programs],
   );
+
+  const activeLevel =
+    selectedLevel && levels.includes(selectedLevel)
+      ? selectedLevel
+      : (selectedProgram?.level ?? (levels.includes("S1") ? "S1" : levels[0]));
 
   const visiblePrograms = useMemo(
     () => programs.filter((program) => program.level === activeLevel),
-    [activeLevel, programs],
+    [programs, activeLevel],
   );
+
+  //----------------------------------------------------------------------
+
+  const safeCurrentSelection = currentSelection ?? defaultCurrentSelection;
+
+  const [studySystemId, setStudySystemId] = useState(
+    safeCurrentSelection.studySystemId,
+  );
+
+  const [admissionPathId, setAdmissionPathId] = useState(
+    safeCurrentSelection.admissionPathId,
+  );
+
+  useEffect(() => {
+    if (!levels.includes(activeLevel)) {
+      setActiveLevel(levels[0] ?? "S1");
+    }
+  }, [activeLevel, levels]);
+
   const hasChanges =
-    programId !== currentSelection.programId ||
-    studySystemId !== currentSelection.studySystemId ||
-    admissionPathId !== currentSelection.admissionPathId;
+    programId !== safeCurrentSelection.programId ||
+    studySystemId !== safeCurrentSelection.studySystemId ||
+    admissionPathId !== safeCurrentSelection.admissionPathId;
 
   useEffect(() => {
     if (!open) {
@@ -141,19 +245,19 @@ export function StudyProgramDialog({
               >
                 {levels.map((level) => (
                   <button
-                    key={level}
+                    key={String(level)}
                     type="button"
                     aria-pressed={activeLevel === level}
                     onClick={() => {
-                      setActiveLevel(level);
-                      if (
-                        !programs.some(
-                          (item) =>
-                            item.id === programId && item.level === level,
-                        )
-                      ) {
-                        setProgramId("");
-                      }
+                      // setActiveLevel(level);
+                      // if (
+                      //   !programs.some(
+                      //     (item: DummyProgram) =>
+                      //       item.id === programId && item.level === level,
+                      //   )
+                      // ) {
+                      //   setProgramId("");
+                      // }
                     }}
                     className={`min-h-9 min-w-14 rounded-xl px-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 ${
                       activeLevel === level
@@ -161,7 +265,7 @@ export function StudyProgramDialog({
                         : "text-slate-500 hover:text-slate-900"
                     }`}
                   >
-                    {level}
+                    {String(level)}
                   </button>
                 ))}
               </div>
@@ -198,7 +302,7 @@ export function StudyProgramDialog({
                       </span>
                     </div>
                     <p className="mt-3 text-[9px] font-extrabold uppercase tracking-[0.1em] text-blue-600">
-                      {program.faculty}
+                      {program.faculty}xxx
                     </p>
                     <p className="mt-1.5 text-sm font-bold text-slate-950">
                       {program.name}
