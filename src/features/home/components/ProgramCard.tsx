@@ -70,23 +70,23 @@ export function ProgramCard({ program, index }: ProgramCardProps) {
         </span>
       </div>
 
-      <div className="relative mt-8 flex-1">
+      <div className="relative mt-7 flex-1">
         <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-blue-600">
           {program.faculty?.name}
         </p>
 
-        <h3 className="mt-3 text-[23px] font-bold tracking-[-0.035em] text-slate-950">
+        <h3 className="mt-2 text-[23px] font-bold tracking-[-0.035em] text-slate-950">
           {program.name}
         </h3>
 
-        <p className="mt-3 text-sm leading-6 text-slate-500">
+        <p className="mt-0 text-sm leading-6 text-slate-500">
           {program.name} dengan akreditas {program.accreditation}.
         </p>
       </div>
 
       <Link
         href={`/pendaftaran?program_studi=${program.id}`}
-        className="relative mt-7 inline-flex min-h-11 items-center justify-between rounded-xl border border-slate-200 px-4 text-sm font-bold text-slate-800 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+        className="relative mt-0 inline-flex min-h-11 items-center justify-between rounded-xl border border-slate-200 px-4 text-sm font-bold text-slate-800 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
       >
         Daftar sekarang
         <MoveUpRight className="size-4" />

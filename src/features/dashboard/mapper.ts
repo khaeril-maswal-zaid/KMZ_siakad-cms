@@ -1,4 +1,4 @@
-import { CheckCircle2, ReceiptText, UserRound } from "lucide-react";
+import { CheckCircle2, CreditCard, ReceiptText, UserRound } from "lucide-react";
 import { createElement } from "react";
 
 import type {
@@ -32,9 +32,15 @@ function formatDate(value: string) {
 
 function findIncludedResource(
   included: DashboardIncludedResource[],
-  identifier?: { id: string } | null,
+  identifier?: { id: string; type?: string } | null,
 ) {
-  return included.find((resource) => resource.id === identifier?.id);
+  if (!identifier) return undefined;
+
+  return included.find(
+    (resource) =>
+      resource.id === identifier.id &&
+      (!identifier.type || resource.type === identifier.type),
+  );
 }
 
 function getStudyProgram(
@@ -45,7 +51,6 @@ function getStudyProgram(
     application.relationships?.studyProgramChoices?.data?.[0];
 
   const choice = findIncludedResource(included, choiceIdentifier);
-
   const studyProgramIdentifier = choice?.relationships?.studyProgram?.data;
 
   return findIncludedResource(included, studyProgramIdentifier);
@@ -67,23 +72,23 @@ export function mapDashboardResponse(
   const included = response.included ?? [];
   const attributes = application.attributes;
 
-  const programChoices =
-    application.relationships?.studyProgramChoices?.data ?? [];
-
   const admissionPeriod = findIncludedResource(
     included,
     application.relationships?.admissionPeriod?.data,
   );
+
   const admissionPath = findIncludedResource(
     included,
     application.relationships?.admissionPath?.data,
   );
+
   const classSchedule = findIncludedResource(
     included,
     application.relationships?.classShedule?.data,
   );
 
   const studyProgram = getStudyProgram(application, included);
+
   const faculty = getFaculty(studyProgram, included);
   const hasApplication = Boolean(application.id);
 
@@ -98,17 +103,8 @@ export function mapDashboardResponse(
 
     statuses: [
       {
-        label: "Status pendaftaran",
-        value: hasApplication ? "Pendaftaran aktif" : EMPTY_VALUE,
-        description: `${programChoices.length} pilihan program studi tercatat`,
-        icon: createElement(CheckCircle2, {
-          className: "size-5",
-        }),
-        tone: "emerald",
-      },
-      {
-        label: "Nama pendaftar",
-        value: attributes.full_name || EMPTY_VALUE,
+        label: "Status akun",
+        value: "Aktif",
         description: `Dibuat ${formatDate(attributes.created_at)}`,
         icon: createElement(UserRound, {
           className: "size-5",
@@ -116,9 +112,18 @@ export function mapDashboardResponse(
         tone: "blue",
       },
       {
-        label: "Nomor pendaftaran",
-        value: attributes.registration_number || EMPTY_VALUE,
-        description: "Nomor pendaftaran",
+        label: "Tahap berikutnya",
+        value: "Pembayaran",
+        description: "Selesaikan pembayaran pendaftaran",
+        icon: createElement(CreditCard, {
+          className: "size-5",
+        }),
+        tone: "emerald",
+      },
+      {
+        label: "Biaya pendaftaran",
+        value: "Rp250.000",
+        description: "Biaya pendaftaran mahasiswa baru",
         icon: createElement(ReceiptText, {
           className: "size-5",
         }),
@@ -128,10 +133,10 @@ export function mapDashboardResponse(
 
     processSteps: [
       {
-        id: "program",
-        label: "Pilih program studi",
-        description: "Program studi dan jalur masuk sudah dipilih.",
-        status: hasApplication ? "completed" : "upcoming",
+        id: "registrasi",
+        label: "Registrasi",
+        description: "Akun pendaftaran berhasil dibuat.",
+        status: "completed",
       },
       {
         id: "account",
@@ -140,10 +145,16 @@ export function mapDashboardResponse(
         status: hasApplication ? "completed" : "upcoming",
       },
       {
+        id: "program",
+        label: "Pilih program studi",
+        description: "Program studi dan jalur masuk sudah dipilih.",
+        status: hasApplication ? "completed" : "upcoming",
+      },
+      {
         id: "payment",
         label: "Pembayaran",
         description: "Bayar biaya pendaftaran untuk membuka formulir.",
-        status: "upcoming",
+        status: attributes.status == "registered" ? "current" : "upcoming",
       },
       {
         id: "form",
@@ -160,7 +171,6 @@ export function mapDashboardResponse(
     ],
 
     selection: {
-      institutionName: EMPTY_VALUE,
       level: studyProgram?.attributes.level ?? EMPTY_VALUE,
       faculty: faculty?.attributes.name ?? EMPTY_VALUE,
       programName: studyProgram?.attributes.name ?? EMPTY_VALUE,

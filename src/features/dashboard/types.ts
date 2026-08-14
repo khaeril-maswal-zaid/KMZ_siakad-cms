@@ -9,6 +9,7 @@ export type DashboardApiResource<TAttributes> = {
 export type DashboardApplicationAttributes = {
   registration_number: string;
   full_name: string;
+  status: string;
   phone: string;
   created_at: string;
 };
@@ -72,7 +73,6 @@ export type DashboardProcessStep = {
 };
 
 export type DashboardSelection = {
-  institutionName: string;
   level: string;
   faculty: string;
   programName: string;
