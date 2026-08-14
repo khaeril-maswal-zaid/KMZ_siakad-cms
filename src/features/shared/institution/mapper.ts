@@ -3,7 +3,7 @@ import type {
   InstitutionSettings,
 } from "./types";
 
-export function mapInstitutionSettings(
+export function mapInstitutionSettingResourcesToSettings(
   resources: InstitutionSettingApiResource[],
 ): InstitutionSettings {
   const settings: InstitutionSettings = {
@@ -12,8 +12,8 @@ export function mapInstitutionSettings(
     social: {},
   };
 
-  resources.forEach((item) => {
-    const { category, key, value } = item.attributes;
+  resources.forEach((settingResource) => {
+    const { category, key, value } = settingResource.attributes;
 
     if (category in settings) {
       settings[category as keyof InstitutionSettings][key] = value;

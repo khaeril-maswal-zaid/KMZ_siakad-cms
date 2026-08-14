@@ -5,7 +5,7 @@ import type { AuthSession, LoginApiResponse, LoginCredentials } from "./types";
 export async function loginUser(
   credentials: LoginCredentials,
 ): Promise<AuthSession> {
-  const { data } = await api.post<LoginApiResponse>("/auth/login", credentials);
+  const response = await api.post<LoginApiResponse>("/auth/login", credentials);
 
-  return mapLoginApiResponse(data);
+  return mapLoginApiResponse(response.data);
 }

@@ -2,17 +2,17 @@ import { Check, Route } from "lucide-react";
 import type { AdmissionPath } from "@/features/shared/master/admission-path/types";
 import { ChoiceSection } from "./ChoiceSection";
 
-type JalurMasukProps = {
+type AdmissionPathSelectionProps = {
   admissionPaths: AdmissionPath[];
   selectedAdmissionPathId: string;
   onAdmissionPathChange: (id: string) => void;
 };
 
-export function JalurMasuk({
+export function AdmissionPathSelection({
   admissionPaths,
   selectedAdmissionPathId,
   onAdmissionPathChange,
-}: JalurMasukProps) {
+}: AdmissionPathSelectionProps) {
   return (
     <ChoiceSection
       icon={<Route className="size-5" />}
@@ -26,14 +26,14 @@ export function JalurMasuk({
         aria-label="Pilih jalur masuk"
       >
         {admissionPaths.map((path) => {
-          const selected = selectedAdmissionPathId === path.id;
+          const isSelected = selectedAdmissionPathId === path.id;
 
           return (
             <button
               key={path.id}
               type="button"
               role="radio"
-              aria-checked={selected}
+              aria-checked={isSelected}
               onClick={() => onAdmissionPathChange(path.id)}
               className={`
                 group rounded-2xl border p-4
@@ -44,7 +44,7 @@ export function JalurMasuk({
                 focus-visible:ring-blue-600
 
                 ${
-                  selected
+                  isSelected
                     ? "border-blue-600 bg-blue-50/80 shadow-[0_10px_30px_rgba(37,99,235,0.1)]"
                     : "border-slate-200 bg-white hover:border-blue-200 hover:bg-slate-50"
                 }
@@ -68,7 +68,7 @@ export function JalurMasuk({
                     rounded-full border
 
                     ${
-                      selected
+                      isSelected
                         ? "border-blue-600 bg-blue-600 text-white"
                         : "border-slate-200 text-transparent group-hover:border-blue-200"
                     }

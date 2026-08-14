@@ -2,13 +2,10 @@
 
 import {
   AtSign,
-  Eye,
-  EyeOff,
   LockKeyhole,
   Phone,
   UserRound,
 } from "lucide-react";
-import { useState } from "react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
 
 import type { RegistrationFormValues } from "../types";
@@ -21,9 +18,6 @@ export function RegistrationForm({
 }: {
   form: UseFormReturn<RegistrationFormValues>;
 }) {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-
   const {
     register,
     control,

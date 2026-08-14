@@ -4,18 +4,9 @@ import { CampusLogo } from "@/components/CampusLogo";
 import Link from "next/link";
 import { FormLogin } from "../components/FormLogin";
 import { HeroLogin } from "../components/HeroLogin";
-import { LoadingComponent } from "@/components/LoadingComponent";
 import { Pointer } from "@/components/Pointer";
 
 export function LoginPage() {
-  const data = {
-    isLoading: false,
-  };
-
-  if (!data) {
-    return <LoadingComponent />;
-  }
-
   return (
     <div className="min-h-screen overflow-hidden bg-[#f5f8fd] text-slate-950">
       <header className="border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">

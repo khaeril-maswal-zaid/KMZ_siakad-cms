@@ -8,9 +8,9 @@ const studySessionLabels: Record<string, string> = {
   weekend: "Akhir Pekan",
 };
 
-type SistemKuliahProps = {
+type ClassScheduleSelectionProps = {
   campuses: string[];
-  availableStudySystems: ClassSchedule[];
+  availableClassSchedules: ClassSchedule[];
 
   selectedCampus: string;
   selectedSession: string;
@@ -19,14 +19,14 @@ type SistemKuliahProps = {
   onSessionChange: (session: string) => void;
 };
 
-export function SistemKuliah({
+export function ClassScheduleSelection({
   campuses,
-  availableStudySystems,
+  availableClassSchedules,
   selectedCampus,
   selectedSession,
   onCampusChange,
   onSessionChange,
-}: SistemKuliahProps) {
+}: ClassScheduleSelectionProps) {
   return (
     <ChoiceSection
       icon={<MapPin className="size-5" />}
@@ -43,14 +43,14 @@ export function SistemKuliah({
           aria-label="Pilih kampus"
         >
           {campuses.map((campus) => {
-            const selected = selectedCampus === campus;
+            const isSelected = selectedCampus === campus;
 
             return (
               <button
                 key={campus}
                 type="button"
                 role="radio"
-                aria-checked={selected}
+                aria-checked={isSelected}
                 onClick={() => onCampusChange(campus)}
                 className={`
                   min-h-12 rounded-2xl border px-3
@@ -61,7 +61,7 @@ export function SistemKuliah({
                   focus-visible:ring-blue-600
 
                   ${
-                    selected
+                    isSelected
                       ? "border-blue-600 bg-blue-50 text-blue-700 shadow-[0_8px_22px_rgba(37,99,235,0.1)]"
                       : "border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:bg-slate-50"
                   }
@@ -74,7 +74,7 @@ export function SistemKuliah({
         </div>
       </div>
 
-      {availableStudySystems.length > 0 && (
+      {availableClassSchedules.length > 0 && (
         <div className="mt-4">
           <p className="mb-2 text-[11px] font-bold text-slate-500">
             Waktu kuliah
@@ -85,16 +85,16 @@ export function SistemKuliah({
             role="radiogroup"
             aria-label="Pilih waktu kuliah"
           >
-            {availableStudySystems.map((system) => {
-              const selected = selectedSession === system.session;
+            {availableClassSchedules.map((classSchedule) => {
+              const isSelected = selectedSession === classSchedule.session;
 
               return (
                 <button
-                  key={system.id}
+                  key={classSchedule.id}
                   type="button"
                   role="radio"
-                  aria-checked={selected}
-                  onClick={() => onSessionChange(system.session)}
+                  aria-checked={isSelected}
+                  onClick={() => onSessionChange(classSchedule.session)}
                   className={`
                     min-h-12 rounded-2xl border px-3
                     text-left text-xs font-extrabold leading-4
@@ -104,13 +104,14 @@ export function SistemKuliah({
                     focus-visible:ring-blue-600
 
                     ${
-                      selected
+                      isSelected
                         ? "border-blue-600 bg-blue-50 text-blue-700 shadow-[0_8px_22px_rgba(37,99,235,0.1)]"
                         : "border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:bg-slate-50"
                     }
                   `}
                 >
-                  {studySessionLabels[system.session] ?? system.name}
+                  {studySessionLabels[classSchedule.session] ??
+                    classSchedule.name}
                 </button>
               );
             })}

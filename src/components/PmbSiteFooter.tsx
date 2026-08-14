@@ -1,10 +1,10 @@
 import { Mail, MapPin, MessageCircleMore, Phone } from "lucide-react";
 import Link from "next/link";
 import { CampusLogo } from "@/components/CampusLogo";
-import { useFooterData } from "@/hooks/institution";
+import { useCampusProfile } from "@/hooks/campus-profile";
 
 export function PmbSiteFooter() {
-  const { campus } = useFooterData();
+  const campus = useCampusProfile();
   if (!campus) return null;
 
   return (

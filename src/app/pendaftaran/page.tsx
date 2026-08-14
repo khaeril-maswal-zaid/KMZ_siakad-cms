@@ -1,4 +1,4 @@
-import { PendaftaranPage } from "@/features/pendaftaran/page/PendaftaranPage";
+import { RegistrationFlowPage } from "@/features/registration-flow/page/RegistrationFlowPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Daftar akun, pilih program studi, dan mulai proses Penerimaan Mahasiswa Baru Universitas Arunika.",
 };
 
-export default async function Pendaftaran({
+export default async function RegistrationRoute({
   searchParams,
 }: {
   searchParams: Promise<{
@@ -19,5 +19,5 @@ export default async function Pendaftaran({
   const initialProgramId =
     typeof query.program_studi === "string" ? query.program_studi : undefined;
 
-  return <PendaftaranPage initialProgramId={initialProgramId} />;
+  return <RegistrationFlowPage initialProgramId={initialProgramId} />;
 }

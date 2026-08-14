@@ -2,19 +2,19 @@ import { Check, GraduationCap, PencilLine } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { StudyProgram } from "@/features/shared/master/study-program";
 
-type PilihanProdiProps = {
+type StudyProgramSelectionProps = {
   programs: StudyProgram[];
   initialProgramId?: string;
   selectedProgramId: string;
   onProgramChange: (programId: string) => void;
 };
 
-export function PilihanProdi({
+export function StudyProgramSelection({
   programs,
   initialProgramId,
   selectedProgramId,
   onProgramChange,
-}: PilihanProdiProps) {
+}: StudyProgramSelectionProps) {
   const [selectedLevel, setSelectedLevel] = useState<string>();
   const [isChangingProgram, setIsChangingProgram] = useState(false);
 

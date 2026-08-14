@@ -4,15 +4,16 @@ import { useStudyPrograms } from "@/features/shared/master/study-program";
 import { admissionSteps } from "./constants";
 
 export function useHome() {
-  const institution = useInstitution();
-  const studyPrograms = useStudyPrograms({ includeFaculty: true });
+  const institutionSettingsQuery = useInstitution();
+  const studyProgramsQuery = useStudyPrograms({ includeFaculty: true });
 
-  const data = useMemo(() => {
-    if (!institution.data) {
+  const homeData = useMemo(() => {
+    if (!institutionSettingsQuery.data) {
       return null;
     }
 
     return {
+      // TODO: Replace with backend admission wave API when available.
       academicYear: "2026/2027",
       activeWave: {
         name: "Gelombang 1",
@@ -20,15 +21,16 @@ export function useHome() {
         status: "active" as const,
         academicYear: "2026/2027",
       },
-      programs: studyPrograms.data ?? [],
+      programs: studyProgramsQuery.data ?? [],
       admissionSteps: admissionSteps(),
       faqs: [],
     };
-  }, [institution.data, studyPrograms.data]);
+  }, [institutionSettingsQuery.data, studyProgramsQuery.data]);
 
   return {
-    data,
-    isLoading: institution.isLoading || studyPrograms.isLoading,
-    error: institution.error ?? studyPrograms.error,
+    data: homeData,
+    isLoading:
+      institutionSettingsQuery.isLoading || studyProgramsQuery.isLoading,
+    error: institutionSettingsQuery.error ?? studyProgramsQuery.error,
   };
 }

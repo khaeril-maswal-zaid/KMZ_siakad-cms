@@ -10,13 +10,13 @@ import { StatusCards } from "../components/StatusCards";
 import { useDashboard } from "../hooks";
 
 export function DashboardPage() {
-  const { data, isLoading, error, refetch } = useDashboard();
+  const { data: dashboardData, isLoading, error, refetch } = useDashboard();
 
   if (error) {
     return <ErrorComponent refetch={refetch} />;
   }
 
-  if (isLoading || !data) {
+  if (isLoading || !dashboardData) {
     return <LoadingComponent />;
   }
 
@@ -24,22 +24,22 @@ export function DashboardPage() {
     <PmbFlowShell
       authenticatedArea
       currentStep={3}
-      eyebrow={data.eyebrow}
-      title={`Selamat datang, ${data.firstName}!`}
-      description={data.titleDescription}
+      eyebrow={dashboardData.eyebrow}
+      title={`Selamat datang, ${dashboardData.firstName}!`}
+      description={dashboardData.titleDescription}
     >
       <section className="mx-auto max-w-[1180px] px-5 py-10 sm:px-8 sm:py-12 lg:px-10">
-        <StatusCards statuses={data.statuses} />
+        <StatusCards statuses={dashboardData.statuses} />
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
-          <ProgressCard steps={data.processSteps} />
+          <ProgressCard steps={dashboardData.processSteps} />
 
           <div className="space-y-5 lg:sticky lg:top-6">
-            <SelectionCard selection={data.selection} />
+            <SelectionCard selection={dashboardData.selection} />
             <NextActionCard
-              action={data.nextAction}
-              label={data.nextActionLabel}
-              href={data.nextActionHref}
+              action={dashboardData.nextAction}
+              label={dashboardData.nextActionLabel}
+              href={dashboardData.nextActionHref}
             />
           </div>
         </div>

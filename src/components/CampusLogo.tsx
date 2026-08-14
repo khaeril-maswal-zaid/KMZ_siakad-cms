@@ -1,8 +1,8 @@
-import { useFooterData } from "@/hooks/institution";
+import { useCampusProfile } from "@/hooks/campus-profile";
 import { GraduationCap } from "lucide-react";
 
 export function CampusLogo() {
-  const { campus } = useFooterData();
+  const campus = useCampusProfile();
   if (!campus) return null;
   return (
     <div

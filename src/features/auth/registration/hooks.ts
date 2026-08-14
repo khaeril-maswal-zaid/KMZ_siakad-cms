@@ -1,10 +1,8 @@
-import { useMemo } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { useProgramSelectionData } from "@/features/program-selection/hooks";
-import type { StudySelection } from "@/features/program-selection/types";
-import { getStoredRegistrationSelection, registerUser } from "./api";
-import { mapStoredSelectionToStudySelection } from "./mapper";
+import { registerUser } from "./api";
+import { getRegistrationSelection } from "./storage";
 import type { RegisterUserPayload } from "./types";
 
 export function useRegisterUser() {
@@ -17,20 +15,14 @@ export function useRegistrationData() {
   const programSelection = useProgramSelectionData();
   const storageQuery = useQuery({
     queryKey: ["registration", "selection"],
-    queryFn: getStoredRegistrationSelection,
+    queryFn: getRegistrationSelection,
     staleTime: 1000 * 60,
     refetchOnWindowFocus: false,
   });
 
-  const selection = useMemo<StudySelection | null>(() => {
-    if (storageQuery.data) {
-      return mapStoredSelectionToStudySelection(storageQuery.data);
-    }
-    return null;
-  }, [storageQuery.data]);
-
   return {
-    selection,
+    selection: storageQuery.data ?? null,
+    // TODO: Replace with backend admission wave API when available.
     waveName: programSelection.data?.waveName ?? "Gelombang 1",
     registrationFee: programSelection.data?.registrationFee ?? 250000,
     isLoading: programSelection.isLoading || storageQuery.isLoading,

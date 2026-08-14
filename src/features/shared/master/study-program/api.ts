@@ -11,7 +11,7 @@ export async function getStudyPrograms(
 ): Promise<StudyProgram[]> {
   const { includeFaculty = false } = options;
 
-  const { data } = await api.get<StudyProgramApiResponse>(
+  const response = await api.get<StudyProgramApiResponse>(
     "/master/studi-program",
     {
       params: includeFaculty
@@ -22,5 +22,8 @@ export async function getStudyPrograms(
     },
   );
 
-  return mapStudyPrograms(data.data, data.included ?? []);
+  return mapStudyPrograms(
+    response.data.data,
+    response.data.included ?? [],
+  );
 }

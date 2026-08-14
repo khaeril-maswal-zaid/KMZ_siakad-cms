@@ -13,9 +13,9 @@ import {
 } from "@/features/home/components";
 
 export function HomePage() {
-  const { data, isLoading } = useHome();
+  const { data: homeData, isLoading } = useHome();
 
-  if (isLoading || !data) {
+  if (isLoading || !homeData) {
     return <LandingSkeleton />;
   }
 
@@ -24,10 +24,10 @@ export function HomePage() {
       <Header />
 
       <main>
-        <Hero data={data} />
-        <ProgramSection programs={data.programs} />
-        <AdmissionFlowSection steps={data.admissionSteps} />
-        {/* <FaqSection faq={data.faq} /> */}
+        <Hero data={homeData} />
+        <ProgramSection programs={homeData.programs} />
+        <AdmissionFlowSection steps={homeData.admissionSteps} />
+        {/* <FaqSection faq={homeData.faq} /> */}
         <CallToAction />
       </main>
 

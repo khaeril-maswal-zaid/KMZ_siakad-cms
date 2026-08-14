@@ -10,7 +10,7 @@ export function useProgramSelectionData() {
   const classSchedulesQuery = useClassSchedules();
   const admissionPathsQuery = useAdmissionPaths();
 
-  const data = useMemo<ProgramSelectionPageData | null>(() => {
+  const programSelectionData = useMemo<ProgramSelectionPageData | null>(() => {
     if (
       !programsQuery.data ||
       !classSchedulesQuery.data ||
@@ -23,13 +23,14 @@ export function useProgramSelectionData() {
       programs: programsQuery.data,
       classSchedules: classSchedulesQuery.data,
       admissionPaths: admissionPathsQuery.data,
+      // TODO: Replace with backend admission wave API when available.
       waveName: "Gelombang 1",
       registrationFee: 250000,
     };
   }, [admissionPathsQuery.data, classSchedulesQuery.data, programsQuery.data]);
 
   return {
-    data,
+    data: programSelectionData,
     isLoading:
       programsQuery.isLoading ||
       classSchedulesQuery.isLoading ||

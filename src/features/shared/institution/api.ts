@@ -1,14 +1,15 @@
 import api from "@/lib/axios";
 
-import { mapInstitutionSettings } from "./mapper";
+import { mapInstitutionSettingResourcesToSettings } from "./mapper";
 import type {
   InstitutionSettingApiResponse,
   InstitutionSettings,
 } from "./types";
 
 export async function getInstitutionSettings(): Promise<InstitutionSettings> {
-  const { data } =
-    await api.get<InstitutionSettingApiResponse>("/master/institusi");
+  const response = await api.get<InstitutionSettingApiResponse>(
+    "/master/institusi",
+  );
 
-  return mapInstitutionSettings(data.data);
+  return mapInstitutionSettingResourcesToSettings(response.data.data);
 }
