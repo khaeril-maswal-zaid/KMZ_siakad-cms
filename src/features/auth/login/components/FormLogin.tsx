@@ -40,7 +40,7 @@ export function FormLogin() {
       await loginMutation.mutateAsync(parsed.data);
 
       toast.success("Login berhasil");
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       const message =
         error instanceof Error

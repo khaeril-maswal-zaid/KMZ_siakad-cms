@@ -60,7 +60,7 @@ export default function RegistrationPage({
 
       login(session.token);
       toast.success(session.message ?? "Registrasi berhasil.");
-      router.push("/");
+      router.push("/dashboard");
     } catch (requestError: unknown) {
       const responseData = axios.isAxiosError(requestError)
         ? (requestError.response?.data as

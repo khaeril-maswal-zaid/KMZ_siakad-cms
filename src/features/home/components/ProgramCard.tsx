@@ -45,7 +45,7 @@ export function ProgramCard({ program, index }: ProgramCardProps) {
 
   return (
     <article
-      className="program-card group relative flex min-h-[330px] flex-col overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_12px_40px_rgba(25,66,120,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_22px_54px_rgba(25,66,120,0.12)] sm:p-7"
+      className="program-card group relative flex min-h-[310px] flex-col overflow-hidden rounded-[28px] border border-slate-200/80 bg-white p-6 shadow-[0_12px_40px_rgba(25,66,120,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_22px_54px_rgba(25,66,120,0.12)] sm:p-7"
       style={{
         animationDelay: `${index * 70}ms`,
       }}
@@ -70,7 +70,7 @@ export function ProgramCard({ program, index }: ProgramCardProps) {
         </span>
       </div>
 
-      <div className="relative mt-7 flex-1">
+      <div className="relative my-7">
         <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-blue-600">
           {program.faculty?.name}
         </p>
