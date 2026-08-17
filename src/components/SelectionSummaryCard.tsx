@@ -10,7 +10,6 @@ const currencyFormatter = new Intl.NumberFormat("id-ID", {
 
 type SelectionSummaryCardProps = {
   selection: StudySelection | null;
-  waveName: string;
   registrationFee: number;
   actionLabel: string;
   onAction: () => void;
@@ -20,7 +19,6 @@ type SelectionSummaryCardProps = {
 
 export function SelectionSummaryCard({
   selection,
-  waveName,
   registrationFee,
   actionLabel,
   onAction,

@@ -2,10 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { PaymentSummaryCard } from "./components/payment-summary-card";
-import { usePaymentPage } from "./hooks";
+import { PaymentSummaryCard } from "../components/payment-summary-card";
+import { usePaymentPage } from "../hooks";
 import { PmbFlowShell } from "@/components/PmbFlowShell";
-import { PaymentMethod } from "./components/payment-method";
+import { PaymentMethod } from "../components/payment-method";
 
 export function PaymentPage() {
   const router = useRouter();

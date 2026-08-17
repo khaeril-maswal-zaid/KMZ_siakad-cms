@@ -1,16 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getActiveMaves } from "./api";
+import { getActiveMave } from "./api";
+import { activeMaveQueryKeys } from "./query-keys";
 
-interface UseStudyProgramsOptions {
-  includeFaculty?: boolean;
-}
-
-export function useStudyPrograms(options: UseStudyProgramsOptions = {}) {
-  const { includeFaculty = false } = options;
-
+export function useActiveMave() {
   return useQuery({
-    queryKey: ,
-    queryFn: () => getActiveMaves(),
+    queryKey: activeMaveQueryKeys.detail(),
+    queryFn: getActiveMave,
   });
 }

@@ -81,9 +81,6 @@ export function ProgramSelectionPage({
         admissionPathId: selectedAdmissionPath?.id ?? "",
         admissionPathName: selectedAdmissionPath?.name ?? "",
         admissionPathDescription: selectedAdmissionPath?.description ?? "",
-        // TODO: Replace with backend admission wave API when available.
-        waveId: "wave-1",
-        waveName: programSelectionData?.waveName ?? "",
         registrationFee: programSelectionData?.registrationFee ?? 0,
       }
     : null;
@@ -150,7 +147,6 @@ export function ProgramSelectionPage({
           <div className="lg:sticky lg:top-6">
             <SelectionSummaryCard
               selection={selectedStudy}
-              waveName={programSelectionData.waveName}
               registrationFee={programSelectionData.registrationFee}
               actionLabel="Lanjutkan Registrasi"
               onAction={continueRegistration}

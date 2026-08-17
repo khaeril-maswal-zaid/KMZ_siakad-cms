@@ -6,7 +6,7 @@
 
 export interface ActiveMaveApiResource {
   id: string;
-  type: string;
+  type: "master_admission_periods";
 
   attributes: {
     re_registration_end: string;
@@ -15,8 +15,12 @@ export interface ActiveMaveApiResource {
     registration_end: string;
     registration_start: string;
     name: string;
-    academic_year_id: string;
+    academic_year_id: number;
   };
+}
+
+export interface ActiveMaveApiResponse {
+  data: ActiveMaveApiResource[];
 }
 
 /**
@@ -28,4 +32,10 @@ export interface ActiveMaveApiResource {
 export interface ActiveMave {
   id: string;
   name: string;
+  registrationStart: string;
+  registrationEnd: string;
+  reRegistrationStart: string;
+  reRegistrationEnd: string;
+  announcementDate: string;
+  academicYearId: number;
 }

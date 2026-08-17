@@ -1,11 +1,11 @@
 import api from "@/lib/axios";
-import { mapActiveMaves } from "./mapper";
-import type { ActiveMave, ActiveMaveApiResource } from "./types";
+import { mapActiveMave } from "./mapper";
+import { ActiveMave, ActiveMaveApiResponse } from "./types";
 
-export async function getActiveMaves(): Promise<ActiveMave> {
-  const response = await api.get<ActiveMaveApiResource>(
+export async function getActiveMave(): Promise<ActiveMave | null> {
+  const response = await api.get<ActiveMaveApiResponse>(
     "/master/gelombang-aktif",
   );
 
-  return mapActiveMaves(response.data);
+  return mapActiveMave(response.data);
 }

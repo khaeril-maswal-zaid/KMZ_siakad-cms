@@ -12,8 +12,6 @@ export type StudySelection = {
   admissionPathId: string;
   admissionPathName: string;
   admissionPathDescription: string;
-  waveId: string;
-  waveName: string;
   registrationFee: number;
 };
 

@@ -1,6 +1,8 @@
+import {
+  getActiveMave,
+  useActiveMave,
+} from "@/features/shared/master/active-mave";
 import { CalendarDays, GraduationCap, MapPin, Route } from "lucide-react";
-import { StudySelection } from "../features/program-selection/types";
-
 type FieldSummarySelection = {
   level?: string;
   faculty?: string;
@@ -15,6 +17,10 @@ type SelectionSummaryCardProps = {
 };
 
 export function FieldSummaryCard({ selection }: SelectionSummaryCardProps) {
+  const { data: activeMave } = useActiveMave();
+
+  console.log(activeMave);
+
   const items = [
     {
       label: "Jenjang",
@@ -43,7 +49,7 @@ export function FieldSummaryCard({ selection }: SelectionSummaryCardProps) {
     },
     {
       label: "Gelombang",
-      value: selection?.waveName ?? "Belum dipilih",
+      value: selection?.waveName ?? activeMave?.name,
       icon: CalendarDays,
     },
   ];
