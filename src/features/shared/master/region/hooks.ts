@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { getRegions } from "./api";
 import { regionQueryKeys } from "./query-keys";
 

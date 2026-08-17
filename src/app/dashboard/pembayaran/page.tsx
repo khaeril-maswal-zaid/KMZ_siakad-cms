@@ -1,3 +1,4 @@
+import { PaymentPage } from "@/features/pembayaran/payment-page";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

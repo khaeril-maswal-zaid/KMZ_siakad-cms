@@ -1,13 +1,6 @@
-import {
-  ArrowRight,
-  CalendarDays,
-  GraduationCap,
-  LoaderCircle,
-  MapPin,
-  ReceiptText,
-  Route,
-} from "lucide-react";
+import { ArrowRight, LoaderCircle, ReceiptText } from "lucide-react";
 import { StudySelection } from "../features/program-selection/types";
+import { FieldSummaryCard } from "./FieldSummaryCard";
 
 const currencyFormatter = new Intl.NumberFormat("id-ID", {
   style: "currency",
@@ -34,39 +27,6 @@ export function SelectionSummaryCard({
   disabled = false,
   isLoading = false,
 }: SelectionSummaryCardProps) {
-  const items = [
-    {
-      label: "Jenjang",
-      value: selection?.level ?? "Belum dipilih",
-      icon: GraduationCap,
-    },
-    {
-      label: "Fakultas",
-      value: selection ? selection.faculty : "Belum dipilih",
-      icon: GraduationCap,
-    },
-    {
-      label: "Program Studi",
-      value: selection ? selection.programName : "Belum dipilih",
-      icon: GraduationCap,
-    },
-    {
-      label: "Sistem Kuliah",
-      value: selection?.studySystem || "Belum dipilih",
-      icon: MapPin,
-    },
-    {
-      label: "Jalur Masuk",
-      value: selection?.admissionPathName || "Belum dipilih",
-      icon: Route,
-    },
-    {
-      label: "Gelombang",
-      value: waveName,
-      icon: CalendarDays,
-    },
-  ];
-
   return (
     <aside className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(30,64,110,0.1)]">
       <div className="bg-[#0a57c7] px-6 py-6 text-white">
@@ -79,30 +39,7 @@ export function SelectionSummaryCard({
       </div>
 
       <div className="space-y-1 p-5">
-        {items.map((item) => (
-          <div
-            className="flex items-start gap-3 rounded-2xl px-2 py-3"
-            key={item.label}
-          >
-            <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700">
-              <item.icon className="size-4" />
-            </span>
-            <div className="min-w-0">
-              <p className="text-[11px] font-semibold text-slate-400">
-                {item.label}
-              </p>
-              <p
-                className={`mt-0.5 text-sm font-bold ${
-                  item.value === "Belum dipilih"
-                    ? "text-slate-400"
-                    : "text-slate-900"
-                }`}
-              >
-                {item.value}
-              </p>
-            </div>
-          </div>
-        ))}
+        <FieldSummaryCard selection={selection} />
 
         <div className="mt-3 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-4">
           <span className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500">

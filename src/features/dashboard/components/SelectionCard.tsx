@@ -1,52 +1,19 @@
 "use client";
 
 import axios from "axios";
-import { CalendarDays, GraduationCap, MapPin, Route } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCampusProfile } from "@/hooks/campus-profile";
 import type { DashboardSelection } from "../types";
 import { useUpdateSelection } from "../hooks";
 import { StudyProgramDialog } from "./study-program-dialog";
+import { FieldSummaryCard } from "@/components/FieldSummaryCard";
 
 export function SelectionCard({
   selection,
 }: {
   selection: DashboardSelection;
 }) {
-  const details = [
-    {
-      label: "Jenjang",
-      value: selection.level,
-      icon: <GraduationCap className="size-4" />,
-    },
-    {
-      label: "Fakultas",
-      value: selection.faculty,
-      icon: <GraduationCap className="size-4" />,
-    },
-    {
-      label: "Program Studi",
-      value: selection.programName,
-      icon: <GraduationCap className="size-4" />,
-    },
-    {
-      label: "Gelombang",
-      value: selection.waveName,
-      icon: <CalendarDays className="size-4" />,
-    },
-    {
-      label: "Sistem Kuliah",
-      value: selection.studySystem,
-      icon: <MapPin className="size-4" />,
-    },
-    {
-      label: "Jalur Masuk",
-      value: selection.admissionPathName,
-      icon: <Route className="size-4" />,
-    },
-  ];
-
   const campus = useCampusProfile();
   const [selectionDialogOpen, setSelectionDialogOpen] = useState(false);
   const updateSelectionMutation = useUpdateSelection();
@@ -99,21 +66,8 @@ export function SelectionCard({
         </h2>
       </div>
       <div className="space-y-4 p-5">
-        {details.map((detail) => (
-          <div className="flex items-start gap-3" key={detail.label}>
-            <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-blue-50 text-blue-700">
-              {detail.icon}
-            </span>
-            <div>
-              <p className="text-[11px] font-semibold text-slate-400">
-                {detail.label}
-              </p>
-              <p className="mt-0.5 text-sm font-bold leading-5 text-slate-900">
-                {detail.value || "Belum tersedia"}
-              </p>
-            </div>
-          </div>
-        ))}
+        <FieldSummaryCard selection={selection} />
+
         <button
           type="button"
           onClick={() => setSelectionDialogOpen(true)}
