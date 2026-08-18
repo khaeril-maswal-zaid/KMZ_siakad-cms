@@ -20,7 +20,7 @@ export interface ActiveMaveApiResource {
 }
 
 export interface ActiveMaveApiResponse {
-  data: ActiveMaveApiResource[];
+  data: ActiveMaveApiResource;
 }
 
 /**

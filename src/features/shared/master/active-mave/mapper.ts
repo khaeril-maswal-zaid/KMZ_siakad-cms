@@ -3,7 +3,7 @@ import { ActiveMave, ActiveMaveApiResponse } from "./types";
 export function mapActiveMave(
   response: ActiveMaveApiResponse,
 ): ActiveMave | null {
-  const resource = response.data[0];
+  const resource = response.data;
 
   if (!resource) {
     return null;

@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useCallback, useState } from "react";
 import type {
   PaymentState,
   GenerateVirtualAccountPayload,
@@ -16,7 +17,12 @@ import {
 } from "./mapper";
 
 export function usePaymentPage() {
-  const methods = useMemo(() => getPaymentMethods(), []);
+  const methodsQuery = useQuery({
+    queryKey: ["payment-methods"],
+    queryFn: getPaymentMethods,
+  });
+
+  const methods = methodsQuery.data ?? [];
 
   const [payment, setPayment] = useState<PaymentState>({
     selectedBankId: null,

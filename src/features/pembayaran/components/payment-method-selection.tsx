@@ -5,6 +5,7 @@ const bankAccent = {
   orange: "bg-orange-50 text-orange-700 border-orange-100",
   blue: "bg-blue-50 text-blue-700 border-blue-100",
   navy: "bg-slate-100 text-slate-800 border-slate-200",
+  slate: "bg-slate-100 text-slate-700 border-slate-200",
 } as const;
 
 export function PaymentMethodSelection({
@@ -64,7 +65,7 @@ export function PaymentMethodSelection({
             </span>
             <span className="mt-4 inline-flex items-center gap-1.5 text-[10px] font-bold text-blue-600">
               <Landmark className="size-3.5" />
-              Virtual Account
+              {method.id === "qris" ? "QRIS" : "Virtual Account"}
             </span>
           </button>
         );

@@ -134,38 +134,41 @@ export function mapDashboardResponse(
     processSteps: [
       {
         id: "registrasi",
-        label: "Registrasi",
-        description: "Akun pendaftaran berhasil dibuat.",
+        label: "Pilih prog. studi & Buat akun",
+        description: "Pilih program studi dan buat akun pendaftaran.",
         status: "completed",
       },
       {
         id: "account",
-        label: "Buat akun",
-        description: "Akun pendaftaranmu sudah aktif.",
+        label: "Login",
+        description: "Masuk menggunakan akun pendaftaran yang telah dibuat.",
         status: hasApplication ? "completed" : "upcoming",
       },
       {
         id: "program",
-        label: "Pilih program studi",
-        description: "Program studi dan jalur masuk sudah dipilih.",
-        status: hasApplication ? "completed" : "upcoming",
+        label: "Bisa ubah program studi",
+        description:
+          "Ubah pilihan program studi sesuai kebutuhan sebelum melanjutkan.",
+        status: attributes.status == "registered" ? "current" : "completed",
       },
       {
         id: "payment",
         label: "Pembayaran",
-        description: "Bayar biaya pendaftaran untuk membuka formulir.",
-        status: attributes.status == "registered" ? "current" : "upcoming",
+        description:
+          "Lakukan pembayaran biaya pendaftaran untuk melanjutkan proses.",
+        status: attributes.status == "payment" ? "current" : "upcoming",
       },
       {
         id: "form",
         label: "Isi formulir",
-        description: "Lengkapi data diri dan dokumen pendaftaran.",
-        status: "upcoming",
+        description:
+          "Lengkapi formulir pendaftaran dengan data dan dokumen yang diperlukan.",
+        status: attributes.status == "payment" ? "current" : "upcoming",
       },
       {
         id: "selection",
         label: "Jadwal seleksi",
-        description: "Pantau jadwal dan hasil seleksi penerimaan.",
+        description: "Lihat jadwal pelaksanaan dan informasi hasil seleksi.",
         status: "upcoming",
       },
     ],

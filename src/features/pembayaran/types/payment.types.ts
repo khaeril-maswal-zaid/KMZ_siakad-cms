@@ -1,4 +1,4 @@
-export type PaymentBankId = "bni" | "bri" | "mandiri";
+export type PaymentBankId = "bni" | "bri" | "mandiri" | "qris";
 
 export type PaymentInstruction = {
   channel: string;
@@ -10,7 +10,7 @@ export type PaymentMethod = {
   name: string;
   shortName: string;
   description: string;
-  accent: "orange" | "blue" | "navy";
+  accent: "orange" | "blue" | "navy" | "slate";
   instructions: PaymentInstruction[];
 };
 

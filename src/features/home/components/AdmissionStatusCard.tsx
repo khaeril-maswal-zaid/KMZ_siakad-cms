@@ -42,7 +42,7 @@ export function AdmissionStatusCard({
               </p>
 
               <h2 className="mt-2 text-2xl font-bold tracking-[-0.04em]">
-                {wave.name}
+                {wave?.name}
               </h2>
             </div>
 
@@ -61,7 +61,7 @@ export function AdmissionStatusCard({
               </p>
 
               <p className="mt-0.5 text-sm font-bold text-white">
-                {wave.period}
+                {wave?.period}
               </p>
             </div>
           </div>
